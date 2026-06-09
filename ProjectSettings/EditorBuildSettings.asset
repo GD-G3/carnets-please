@@ -11,5 +11,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Dana_Escena1.unity
     guid: 773d67ff723cb7e499a4a362b88a7bae
+  - enabled: 1
+    path: Assets/Scenes/Dana_Camara1.unity
+    guid: b0b4cf490ab1c93409824e0866dbb357
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
