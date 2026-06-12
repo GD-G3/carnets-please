@@ -5,9 +5,20 @@
 [Bb]uilds/
 [Ll]ogs/
 [Uu]ser[Ss]ettings/
+[Mm]emoryCaptures/
+[Rr]ecordings/
 
+!/[Aa]ssets/**/*.meta
+[Aa]ssets/[Ss]treamingAssets/aa.meta
+[Aa]ssets/[Ss]treamingAssets/aa/
+
+sysinfo.txt
+
+.vs/
+.idea/
 *.csproj
 *.sln
+*.slnx
 *.user
 *.pidb
 *.booproj
@@ -19,3 +30,8 @@
 
 .DS_Store
 Thumbs.db
+desktop.ini
+.paket/
+paket-files/
+
+*.unityproj
