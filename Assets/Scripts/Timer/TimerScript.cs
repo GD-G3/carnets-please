@@ -5,6 +5,10 @@ using System;
 public class GameClock : MonoBehaviour
 {
     public static event Action OnGameStarted;
+    public static event Action<int> OnTurnoChanged;
+
+    public static int TurnoGlobal = 0;
+
     public TextMeshProUGUI clockText;
 
     public int HoraInicio = 11;
@@ -31,6 +35,7 @@ public class GameClock : MonoBehaviour
         HoraActual = HoraInicio;
         MinutoActual = MinutoInicio;
 
+        ActualizarTurnoGlobal();
         UpdateClockText();
     }
 
@@ -48,6 +53,7 @@ public class GameClock : MonoBehaviour
 
             AddGameMinutes(MinutosdelJuegoporTick);
             UpdateClockText();
+            ActualizarTurnoGlobal();
 
             CheckGameStart();
 
@@ -81,6 +87,41 @@ void CheckGameStart()
             MinutoActual -= 60;
             HoraActual++;
         }
+    }
+
+    void ActualizarTurnoGlobal()
+    {
+        int nuevoTurno = CalcularTurnoActual();
+
+        if (nuevoTurno != TurnoGlobal)
+        {
+            TurnoGlobal = nuevoTurno;
+
+            Debug.Log("Turno global actual: " + TurnoGlobal);
+
+            OnTurnoChanged?.Invoke(TurnoGlobal);
+        }
+    }
+
+    int CalcularTurnoActual()
+    {
+        int minutosActuales = HoraActual * 60 + MinutoActual;
+        int minutosInicio = 12 * 60;
+        int minutosFinal = 14 * 60 + 30;
+
+        if (minutosActuales < minutosInicio)
+        {
+            return 0;
+        }
+
+        if (minutosActuales >= minutosFinal)
+        {
+            return 10;
+        }
+
+        int minutosDesdeInicio = minutosActuales - minutosInicio;
+
+        return (minutosDesdeInicio / 15) + 1;
     }
 
     bool HasReachedEndTime()

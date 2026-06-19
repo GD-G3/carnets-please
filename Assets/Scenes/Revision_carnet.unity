@@ -2032,7 +2032,7 @@ MonoBehaviour:
     facultad: A
     carrera: A
   hojaDia: {fileID: 1052302518}
-  carnetActual: {fileID: 2117670382}
+  carnetActual: {fileID: 0}
 --- !u!114 &1052302518
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2676,7 +2676,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 229.0484, y: -138.56393}
+  m_AnchoredPosition: {x: 352, y: -178}
   m_SizeDelta: {x: 106.0968, y: 45.3551}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1446597588
@@ -3068,7 +3068,6 @@ GameObject:
   - component: {fileID: 2117670381}
   - component: {fileID: 2117670380}
   - component: {fileID: 2117670383}
-  - component: {fileID: 2117670382}
   m_Layer: 0
   m_Name: carnet_ejemplo
   m_TagString: Untagged
@@ -3150,25 +3149,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2117670382
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2117670379}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62d121abc94abec4898efb435eaf0e91, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Carnet
-  datos:
-    nombre: Carla
-    codigo: 20233456A
-    fecha_vencimiento: 2027
-    foto: {fileID: 0}
-    facultad: FC
-    carrera: "Matem\xE1tica"
 --- !u!61 &2117670383
 BoxCollider2D:
   m_ObjectHideFlags: 0
