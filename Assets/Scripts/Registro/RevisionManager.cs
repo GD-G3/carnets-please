@@ -9,6 +9,11 @@ public class RevisionManager : MonoBehaviour
     [Header("Carnet a revisar")]
     public CarnetData carnetActual;
 
+    [Header("Resultados")]
+    public TMP_Text textoResultados;
+    
+    private int turnoActual = 1;
+
     private void Awake()
     {
         if(instance == null) instance = this;
@@ -20,19 +25,25 @@ public class RevisionManager : MonoBehaviour
 
     }
 
-    public void Permitir()
+    public void RecibirDatosEscaneados(CarnetData datos)
     {
-        Debug.Log("Lo admitiste");
-    }
+        carnetActual = datos;
 
-    public void Rechazar()
-    {
-        Debug.Log("Lo rechazaste");
+        if (textoResultados != null)
+        {
+            textoResultados.text = datos.nombreCompleto.ObtenerNombreCompleto() + "\nTurno " + turnoActual.ToString();
+        }
+        
+        Debug.Log("Datos mostrados en la pantalla");
     }
 
     void SiguienteTurno()
     {
+        turnoActual++;
         Debug.Log("Siguiente...");
         //colocar mas alumnos
+        
+        // Limpiar la UI para el próximo alumno (opcional)
+        if (textoResultados != null) textoResultados.text = "";
     }
 }

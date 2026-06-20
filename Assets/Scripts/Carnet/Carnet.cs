@@ -1,19 +1,47 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-[RequireComponent(typeof(BoxCollider2D))]
+[RequireComponent(typeof(SpriteRenderer))]
+[RequireComponent(typeof(Collider2D))]
 public class Carnet : MonoBehaviour
 {
     [Header("Datos mostrados en el carnet")]
     public CarnetData datos;
 
+    [Header("Imágenes (Volteo)")]
+    public Sprite spriteFrontal;
+    public Sprite spriteTrasero;
+
+    public bool isFlipped { get; private set; } = false;
+
+    private SpriteRenderer spriteRenderer;
+
+    private void Awake()
+    {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+    }
+
     private void OnMouseDown()
     {
-        if (datos == null)
-        {
-            Debug.Log("Este carnet no tiene datos.");
-            return;
-        }
+        // Evita que el clic traspase si hay UI tapando el objeto
+        if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject()) return;
 
-        Debug.Log($"Inspeccion de carnet: {datos.nombreCompleto.ObtenerNombreCompleto()}");
+        VoltearCarnet();
+    }
+
+    private void VoltearCarnet()
+    {
+        isFlipped = !isFlipped;
+        
+        spriteRenderer.sprite = isFlipped ? spriteTrasero : spriteFrontal;
+
+        if (isFlipped)
+        {
+            Debug.Log("El carnet está volteado. Puedes pasar el escáner para registrarlo.");
+        }
+        else
+        {
+            Debug.Log("Carnet de frente.");
+        }
     }
 }
