@@ -1,5 +1,6 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using System.Collections.Generic;
+
 public class RegistroDiario : MonoBehaviour
 {
     public List<Alumno> lista_diaria;
@@ -8,14 +9,24 @@ public class RegistroDiario : MonoBehaviour
     {
         foreach (var alumno in lista_diaria)
         {
-            // verificacion por código
             if (alumno.codigo == datos.codigo)
             {
                 return true;
             }
         }
+        Debug.Log("CÃ³digo no estÃ¡ en lista");
+        return false;
+    }
 
-        Debug.Log("Código no está en lista");
+    public bool En_lista(string codigoBuscado)
+    {
+        foreach (var alumno in lista_diaria)
+        {
+            if (alumno.codigo == codigoBuscado)
+            {
+                return true;
+            }
+        }
         return false;
     }
 }

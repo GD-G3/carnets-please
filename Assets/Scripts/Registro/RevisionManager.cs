@@ -9,6 +9,9 @@ public class RevisionManager : MonoBehaviour
     [Header("Carnet a revisar")]
     public CarnetData carnetActual;
 
+    [Header("Referencias Adicionales")]
+    public RegistroDiario registroDiario;
+
     [Header("Resultados")]
     public TMP_Text textoResultados;
     
@@ -31,10 +34,32 @@ public class RevisionManager : MonoBehaviour
 
         if (textoResultados != null)
         {
-            textoResultados.text = datos.nombreCompleto.ObtenerNombreCompleto() + "\nTurno " + turnoActual.ToString();
+            string mensajeCola = "NO PERTENECE A LA COLA";
+            if (registroDiario != null && registroDiario.En_lista(datos.codigo))
+            {
+                mensajeCola = "PERTENECE A LA COLA";
+            }
+            else if (registroDiario == null)
+            {
+                mensajeCola = "(Falta asignar Registro)";
+            }
+
+            textoResultados.text = $"{datos.nombreCompleto.ObtenerNombreCompleto()}\nTurno {turnoActual}\n{mensajeCola}";
         }
         
         Debug.Log("Datos mostrados en la pantalla");
+    }
+
+    public void Permitir()
+    {
+        Debug.Log("Jugador: Permitir paso");
+        SiguienteTurno();
+    }
+
+    public void Rechazar()
+    {
+        Debug.Log("Jugador: Rechazar paso");
+        SiguienteTurno();
     }
 
     void SiguienteTurno()
