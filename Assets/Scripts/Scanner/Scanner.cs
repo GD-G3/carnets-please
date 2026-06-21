@@ -11,6 +11,7 @@ public class Scanner : MonoBehaviour, IPointerDownHandler
     private Canvas canvas;
     private bool isFollowingMouse = false;
     private bool ignoreNextClick = false;
+    private Vector2 dragOffset;
     
     private Carnet carnetEscaneadoActual;
     private Vector2 startMousePos;
@@ -22,18 +23,32 @@ public class Scanner : MonoBehaviour, IPointerDownHandler
     }
 
     public void OnPointerDown(PointerEventData eventData)
+{
+    if (!isFollowingMouse)
     {
-        // Solo podemos recogerlo si no está siguiendo ya al mouse
-        if (!isFollowingMouse)
+        isFollowingMouse = true;
+        ignoreNextClick = true;
+        rectTransform.SetAsLastSibling();
+
+        if (Mouse.current != null)
         {
-            isFollowingMouse = true;
-            ignoreNextClick = true; 
-            rectTransform.SetAsLastSibling(); 
-            
-            if (Mouse.current != null)
-                startMousePos = Mouse.current.position.ReadValue();
+            startMousePos = Mouse.current.position.ReadValue();
+
+            RectTransform parentRect = rectTransform.parent as RectTransform;
+            Camera cam = canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : canvas.worldCamera;
+
+            Vector2 localMousePos;
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(
+                parentRect,
+                startMousePos,
+                cam,
+                out localMousePos
+            );
+
+            dragOffset = rectTransform.anchoredPosition - localMousePos;
         }
     }
+}
 
     private void Update()
     {
@@ -44,16 +59,18 @@ public class Scanner : MonoBehaviour, IPointerDownHandler
             Vector2 mousePos = Mouse.current.position.ReadValue();
 
             // Seguimiento del mouse
-            Vector2 localPoint;
+            RectTransform parentRect = rectTransform.parent as RectTransform;
             Camera cam = canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : canvas.worldCamera;
-            
-            RectTransformUtility.ScreenPointToLocalPointInRectangle(
-                canvas.transform as RectTransform, 
-                mousePos, 
-                cam, 
-                out localPoint);
 
-            rectTransform.localPosition = localPoint;
+            Vector2 localPoint;
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(
+                parentRect,
+                mousePos,
+                cam,
+                out localPoint
+            );
+
+            rectTransform.anchoredPosition = localPoint + dragOffset;
 
             // DETECCIÓN DEL CARNET 2D
             if (Vector2.Distance(startMousePos, mousePos) > 10f)

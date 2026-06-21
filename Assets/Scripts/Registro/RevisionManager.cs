@@ -9,6 +9,9 @@ public class RevisionManager : MonoBehaviour
 
     [Header("Persona a revisar")]
     public PersonaEnCola personaActual;
+
+    [Header("Carnet visual")]
+    public Carnet carnetVisual;
     private CarnetData carnetActual;
 
     [Header("Imagen del carnet")]
@@ -37,9 +40,13 @@ public class RevisionManager : MonoBehaviour
         personaActual = nuevaPersona;
         carnetActual = null;
 
-        if (textoResultados != null)
+        if (carnetVisual != null)
         {
-            textoResultados.text = "Esperando escaneo del carnet...";
+            carnetVisual.datos = nuevaPersona.carnetMostrado;
+        }
+        else
+        {
+            Debug.LogWarning("No hay Carnet visual asignado en RevisionManager.");
         }
 
         Debug.Log("Nueva persona recibida para revision.");
@@ -176,6 +183,17 @@ public class RevisionManager : MonoBehaviour
     private void SiguientePersona()
     {
         Debug.Log("Siguiente persona...");
+        personaActual = null;
+        carnetActual = null;
+
+        if (QueueSystem.instance != null)
+        {
+            QueueSystem.instance.MandarSiguientePersona();
+        }
+        else
+        {
+            Debug.LogWarning("No existe QueueSystem en la escena.");
+        }
     }
 
 

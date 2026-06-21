@@ -25,6 +25,16 @@ public class QueueSystem : MonoBehaviour
         else Destroy(gameObject);
     }
 
+    private void OnEnable()
+    {
+        GameClock.OnGameStarted += EmpezarAtencion;
+    }
+
+    private void OnDisable()
+    {
+        GameClock.OnGameStarted -= EmpezarAtencion;
+    }
+
     private void Start()
     {
         GenerarColaInicial();
