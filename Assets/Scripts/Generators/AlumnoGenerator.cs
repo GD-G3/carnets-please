@@ -6,6 +6,9 @@ public class AlumnoGenerator : MonoBehaviour
     [Header("Generador de nombres")]
     public NombreGenerator nombreGenerator;
 
+    [Header("Fotos")]
+    public FotoDatabase fotoDatabase;
+
     [Header("Facultades y carreras")]
     public List<FacultadData> facultades;
 
@@ -21,7 +24,16 @@ public class AlumnoGenerator : MonoBehaviour
 
         alumno.nombreCompleto = nombreGenerator.GenerarNombreCompleto(genero);
         alumno.codigo = GenerarCodigo();
-        alumno.fotoID = GenerarFotoID(genero);
+
+        FotoData fotoElegida = fotoDatabase.ObtenerFotoAleatoria(genero);
+        if (fotoElegida != null)
+        {
+            alumno.fotoID = fotoElegida.id;
+        }
+        else
+        {
+            alumno.fotoID = -1;
+        }
 
         AsignarFacultadYCarrera(alumno);
 

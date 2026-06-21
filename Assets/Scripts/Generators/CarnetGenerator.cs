@@ -5,6 +5,9 @@ public class CarnetGenerator : MonoBehaviour
     [Header("Generadores")]
     public AlumnoGenerator alumnoGenerator;
 
+    [Header("Fotos")]
+    public FotoDatabase fotoDatabase;
+
     [Header("Probabilidades de error")]
     [Range(0f, 1f)] public float probErrorIdentificacion = 0.10f;
     [Range(0f, 1f)] public float probErrorArea = 0.08f;
@@ -164,22 +167,13 @@ public class CarnetGenerator : MonoBehaviour
 
     private int GenerarFotoDistinta(Alumno alumnoReal)
     {
-        int nuevaFoto;
-
-        do
+        FotoData fotoDistinta = fotoDatabase.ObtenerFotoDistinta(alumnoReal.fotoID, alumnoReal.nombreCompleto.genero);
+        if (fotoDistinta!= null)
         {
-            if (alumnoReal.nombreCompleto.genero == Genero.Hombre)
-            {
-                nuevaFoto = UnityEngine.Random.Range(1, 11); // 1 al 10
-            }
-            else
-            {
-                nuevaFoto = UnityEngine.Random.Range(11, 21); // 11 al 20
-            }
+            return fotoDistinta.id;
+        } else {
+            return -1;
         }
-        while (nuevaFoto == alumnoReal.fotoID);
-
-    return nuevaFoto;
-    }
+    } 
 
 }
