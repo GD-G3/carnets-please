@@ -82,18 +82,4 @@ public class AlumnoGenerator : MonoBehaviour
         int codigo = UnityEngine.Random.Range(20200000, 20270000);
         return codigo.ToString();
     }
-
-    private int GenerarFotoID(Genero g)
-    {
-        if (g == Genero.Hombre)
-        {
-            return UnityEngine.Random.Range(1, 11);
-        }
-        else
-        {
-            return UnityEngine.Random.Range(11, 21);
-        }
-        
-    }
-
 }
