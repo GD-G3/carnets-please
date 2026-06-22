@@ -9,7 +9,7 @@ public class CarnetGenerator : MonoBehaviour
     public FotoDatabase fotoDatabase;
 
     [Header("Probabilidades de error")]
-    [Range(0f, 1f)] public float probErrorIdentificacion = 0.10f;
+    [Range(0f, 1f)] public float probErrorIdentificacion = 0.05f;
     [Range(0f, 1f)] public float probErrorArea = 0.08f;
     [Range(0f, 1f)] public float probErrorTurno = 0.12f;
     [Range(0f, 1f)] public float probFechaVencida = 0.10f;

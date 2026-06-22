@@ -35,6 +35,25 @@ public class RevisionManager : MonoBehaviour
         else Destroy(gameObject);
     }
 
+    private void Start()
+    {
+        if (carnetVisual != null)
+        {
+            carnetVisual.gameObject.SetActive(false);
+        }
+
+        if (fotoCarnetImage != null)
+        {
+            fotoCarnetImage.sprite = null;
+            fotoCarnetImage.enabled = false;
+        }
+
+        if (textoResultados != null)
+        {
+            textoResultados.text = "Esperando inicio del turno...";
+        }
+    }
+
     public void RecibirPersona(PersonaEnCola nuevaPersona)
     {
         personaActual = nuevaPersona;
@@ -43,6 +62,7 @@ public class RevisionManager : MonoBehaviour
         if (carnetVisual != null)
         {
             carnetVisual.datos = nuevaPersona.carnetMostrado;
+            carnetVisual.gameObject.SetActive(true);
         }
         else
         {
@@ -186,6 +206,11 @@ public class RevisionManager : MonoBehaviour
         personaActual = null;
         carnetActual = null;
 
+        if (carnetVisual != null)
+        {
+            carnetVisual.gameObject.SetActive(false);
+        }
+        
         if (QueueSystem.instance != null)
         {
             QueueSystem.instance.MandarSiguientePersona();
