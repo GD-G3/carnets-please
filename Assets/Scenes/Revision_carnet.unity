@@ -203,7 +203,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 131462180}
-  - component: {fileID: 131462179}
+  - component: {fileID: 131462181}
   m_Layer: 0
   m_Name: RevisionManager
   m_TagString: Untagged
@@ -211,35 +211,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &131462179
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 131462178}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 320a18d3aa50e7b41a19478ce023db15, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::RevisionManager
-  carnetActual:
-    nombreCompleto:
-      nombre: Vivian
-      apellidoPaterno: Ramirez
-      apellidoMaterno: Zarate
-      genero: 1
-    codigo: 0
-    turno: 1
-    area: 1
-    fotoID: 1
-    facultad: 1
-    carrera: 1
-    diaVencimiento: 1
-    mesVencimiento: 1
-    anioVencimiento: 1
-  registroDiario: {fileID: 0}
-  textoResultados: {fileID: 1842390419}
 --- !u!4 &131462180
 Transform:
   m_ObjectHideFlags: 0
@@ -255,6 +226,36 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &131462181
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 131462178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8c1f2a9391c7c348bd9d8c3fe8e9cee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RevisionManager
+  carnetActual:
+    nombreCompleto:
+      nombre: 
+      apellidoPaterno: 
+      apellidoMaterno: 
+      genero: 0
+    codigo: 
+    turno: 0
+    area: 0
+    fotoID: 0
+    facultad: 
+    carrera: 
+    diaVencimiento: 0
+    mesVencimiento: 0
+    anioVencimiento: 0
+  registroDiario: {fileID: 1719549355}
+  dayManager: {fileID: 0}
+  textoResultados: {fileID: 1842390419}
 --- !u!1 &150046091
 GameObject:
   m_ObjectHideFlags: 0
@@ -2797,6 +2798,60 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1698206949}
   m_CullTransparentMesh: 1
+--- !u!1 &1719549354
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1719549356}
+  - component: {fileID: 1719549355}
+  m_Layer: 0
+  m_Name: Registro
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1719549355
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1719549354}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48c8b076bc232d8419d16101e4b6b880, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RegistroDiario
+  lista_diaria:
+  - nombreCompleto:
+      nombre: 
+      apellidoPaterno: 
+      apellidoMaterno: 
+      genero: 1
+    codigo: 
+    fotoID: 0
+    facultad: 
+    carrera: 
+--- !u!4 &1719549356
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1719549354}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 446, y: 216.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1724966058
 GameObject:
   m_ObjectHideFlags: 0
@@ -3192,3 +3247,4 @@ SceneRoots:
   - {fileID: 230524685}
   - {fileID: 305258082}
   - {fileID: 131462180}
+  - {fileID: 1719549356}
