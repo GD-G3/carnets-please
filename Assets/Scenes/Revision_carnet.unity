@@ -223,41 +223,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 320a18d3aa50e7b41a19478ce023db15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RevisionManager
-  personaActual:
-    alumnoReal:
-      nombreCompleto:
-        nombre: 
-        apellidoPaterno: 
-        apellidoMaterno: 
-        genero: 0
-      codigo: 
-      fotoID: 0
-      facultad: 
-      carrera: 
-    carnetMostrado:
-      nombreCompleto:
-        nombre: 
-        apellidoPaterno: 
-        apellidoMaterno: 
-        genero: 0
-      codigo: 
-      turno: 0
-      area: 0
-      fotoID: 0
-      facultad: 
-      carrera: 
-      diaVencimiento: 0
-      mesVencimiento: 0
-      anioVencimiento: 0
-    esColado: 0
-    fueDetectadoPorCamara: 0
-  fotoCarnetImage: {fileID: 0}
-  fotoDatabase: {fileID: 0}
+  carnetActual:
+    nombreCompleto:
+      nombre: Vivian
+      apellidoPaterno: Ramirez
+      apellidoMaterno: Zarate
+      genero: 1
+    codigo: 0
+    turno: 1
+    area: 1
+    fotoID: 1
+    facultad: 1
+    carrera: 1
+    diaVencimiento: 1
+    mesVencimiento: 1
+    anioVencimiento: 1
+  registroDiario: {fileID: 0}
   textoResultados: {fileID: 1842390419}
-  areaGlobal: 1
-  diaActual: 21
-  mesActual: 6
-  anioActual: 2026
 --- !u!4 &131462180
 Transform:
   m_ObjectHideFlags: 0
@@ -1822,7 +1804,6 @@ GameObject:
   - component: {fileID: 1052302516}
   - component: {fileID: 1052302519}
   - component: {fileID: 1052302518}
-  - component: {fileID: 1052302517}
   m_Layer: 5
   m_Name: TextoLista
   m_TagString: Untagged
@@ -1849,53 +1830,6 @@ RectTransform:
   m_AnchoredPosition: {x: 176.1908, y: 46.815033}
   m_SizeDelta: {x: 129.6184, y: 140.3699}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1052302517
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1052302515}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 320a18d3aa50e7b41a19478ce023db15, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::RevisionManager
-  personaActual:
-    alumnoReal:
-      nombreCompleto:
-        nombre: 
-        apellidoPaterno: 
-        apellidoMaterno: 
-        genero: 0
-      codigo: 
-      fotoID: 0
-      facultad: 
-      carrera: 
-    carnetMostrado:
-      nombreCompleto:
-        nombre: 
-        apellidoPaterno: 
-        apellidoMaterno: 
-        genero: 0
-      codigo: 
-      turno: 0
-      area: 0
-      fotoID: 0
-      facultad: 
-      carrera: 
-      diaVencimiento: 0
-      mesVencimiento: 0
-      anioVencimiento: 0
-    esColado: 0
-    fueDetectadoPorCamara: 0
-  fotoCarnetImage: {fileID: 0}
-  fotoDatabase: {fileID: 0}
-  textoResultados: {fileID: 0}
-  areaGlobal: 1
-  diaActual: 21
-  mesActual: 6
-  anioActual: 2026
 --- !u!114 &1052302518
 MonoBehaviour:
   m_ObjectHideFlags: 0

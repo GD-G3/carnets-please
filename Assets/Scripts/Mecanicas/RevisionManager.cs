@@ -11,6 +11,7 @@ public class RevisionManager : MonoBehaviour
 
     [Header("Referencias Adicionales")]
     public RegistroDiario registroDiario;
+    public DayManager dayManager;
 
     [Header("Resultados")]
     public TMP_Text textoResultados;
@@ -70,5 +71,10 @@ public class RevisionManager : MonoBehaviour
         
         // Limpiar la UI para el próximo alumno (opcional)
         if (textoResultados != null) textoResultados.text = "";
+
+        if (dayManager != null)
+        {
+            dayManager.LlamarSiguientePersona();
+        }
     }
 }
