@@ -25,6 +25,10 @@ public class IntrusionManager2D : MonoBehaviour
     [Min(0.01f)]
     public float entryDuration = 2.5f;
 
+    [Header("Window Opening")]
+    public WindowOpener2D windowOpener;
+    public bool openWindowBeforeEntry = true;
+
     [Header("Animation Triggers")]
     public string enterTrigger = "EnterWindow";
     public string idleTrigger = "Idle";
@@ -101,9 +105,17 @@ public class IntrusionManager2D : MonoBehaviour
 
         OnIntrusionTriggered?.Invoke();
 
-        moveCoroutine = StartCoroutine(MoveIntruder());
+        moveCoroutine = StartCoroutine(IntrusionSequence());
     }
+    private IEnumerator IntrusionSequence()
+    {
+        if (openWindowBeforeEntry && windowOpener != null)
+        {
+            yield return StartCoroutine(windowOpener.OpenWindowRoutine());
+        }
 
+        yield return StartCoroutine(MoveIntruder());
+    }
     private IEnumerator MoveIntruder()
     {
         float timer = 0f;
