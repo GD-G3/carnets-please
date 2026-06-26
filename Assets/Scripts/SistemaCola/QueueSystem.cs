@@ -9,6 +9,12 @@ public class QueueSystem : MonoBehaviour
     public List<PersonaEnCola> cola = new List<PersonaEnCola>();
     public int maxPersonasEnCola = 6;
 
+    [Header("Generacion continua")]
+    [Range(0f, 1f)]
+    public float probabilidadGenerarEstudiante = 0.5f;
+    public float segundosEntreIntentos = 3f;
+    private float timerGeneracion;
+
     [Header("Generadores")]
     public AlumnoGenerator alumnoGenerator;
     public CarnetGenerator carnetGenerator;
@@ -40,6 +46,11 @@ public class QueueSystem : MonoBehaviour
         GenerarColaInicial();
     }
 
+    private void Update()
+    {
+        IntentarGenerarEstudianteConTiempo();
+    }
+
     private void GenerarColaInicial()
     {
         cola.Clear();
@@ -51,6 +62,37 @@ public class QueueSystem : MonoBehaviour
         }
 
         Debug.Log("Cola inicial generada. Personas en cola: " + cola.Count);
+    }
+
+    private void IntentarGenerarEstudianteConTiempo()
+    {
+        if (!atencionActiva) return;
+        
+        if (cola.Count >= maxPersonasEnCola) return;
+
+        timerGeneracion += Time.deltaTime;
+
+        if (timerGeneracion >= segundosEntreIntentos)
+        {
+            timerGeneracion = 0f;
+
+            if (UnityEngine.Random.value < probabilidadGenerarEstudiante)
+            {
+                PersonaEnCola nuevaPersona = CrearPersonaNormal();
+                cola.Add(nuevaPersona);
+
+                Debug.Log("Nuevo estudiante generado. Personas en cola: " + cola.Count);
+
+                if (!HayPersonaEnRevision())
+                {
+                    MandarSiguientePersona();
+                }
+            }
+            else
+            {
+                Debug.Log("No se genero estudiante en este intento.");
+            }
+        }
     }
 
     private PersonaEnCola CrearPersonaNormal()
@@ -90,6 +132,7 @@ public class QueueSystem : MonoBehaviour
             return;
         }
 
+
         PersonaEnCola siguientePersona = cola[0];
         cola.RemoveAt(0);
 
@@ -114,5 +157,19 @@ public class QueueSystem : MonoBehaviour
         cola.Insert(posicion, colado);
 
         Debug.Log("Colado insertado en la cola en la posicion: " + posicion);
+    }
+
+    public void CambiarProbabilidadGeneracion(float nuevaProbabilidad)
+    {
+        probabilidadGenerarEstudiante = Mathf.Clamp01(nuevaProbabilidad);
+
+        Debug.Log("Nueva probabilidad de generar estudiante: " + probabilidadGenerarEstudiante);
+    }
+
+    private bool HayPersonaEnRevision()
+    {
+        if (revisionManager == null) return false;
+
+        return revisionManager.personaActual != null;
     }
 }

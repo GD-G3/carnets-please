@@ -44,4 +44,19 @@ public class Carnet : MonoBehaviour
             Debug.Log("Carnet de frente.");
         }
     }
+
+    public void ResetearCarnet()
+    {
+        isFlipped = false;
+
+        if (spriteRenderer == null)
+        {
+            spriteRenderer = GetComponent<SpriteRenderer>();
+        }
+
+        if (spriteRenderer != null && spriteFrontal != null)
+        {
+            spriteRenderer.sprite = spriteFrontal;
+        }
+    }
 }

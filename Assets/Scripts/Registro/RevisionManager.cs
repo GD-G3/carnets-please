@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using System.Collections;
 using System.Collections.Generic;
 
 public class RevisionManager : MonoBehaviour
@@ -14,6 +15,9 @@ public class RevisionManager : MonoBehaviour
     public Carnet carnetVisual;
     private CarnetData carnetActual;
 
+    [Header("Posicion del carnet")]
+    public Transform puntoCarnet;   
+
     [Header("Imagen del carnet")]
     public Image fotoCarnetImage;
     public FotoDatabase fotoDatabase;
@@ -23,6 +27,9 @@ public class RevisionManager : MonoBehaviour
 
     [Header("Configuracion")]
     public int areaGlobal = 1;
+
+    [Header("Segundos de espera")]
+    public float segundosEntreEstudiantes = 3f;
 
     [Header("Fecha actual")]
     public int diaActual = 21;
@@ -61,13 +68,16 @@ public class RevisionManager : MonoBehaviour
 
         if (carnetVisual != null)
         {
-            carnetVisual.datos = nuevaPersona.carnetMostrado;
-            carnetVisual.gameObject.SetActive(true);
+            carnetVisual.gameObject.SetActive(false);
         }
-        else
+
+        if (fotoCarnetImage != null)
         {
-            Debug.LogWarning("No hay Carnet visual asignado en RevisionManager.");
+            fotoCarnetImage.sprite = null;
+            fotoCarnetImage.enabled = false;
         }
+
+        StartCoroutine(MostrarCarnetDespuesDeEspera(nuevaPersona));
 
         Debug.Log("Nueva persona recibida para revision.");
     }
@@ -86,6 +96,40 @@ public class RevisionManager : MonoBehaviour
         MostrarFotoDelCarnet(datos.fotoID);
 
         Debug.Log("Datos mostrados en la pantalla");
+    }
+
+    private IEnumerator MostrarCarnetDespuesDeEspera(PersonaEnCola persona)
+    {
+        yield return new WaitForSeconds(segundosEntreEstudiantes);
+
+        if (personaActual != persona)
+        {
+            yield break;
+        }
+
+        if (carnetVisual != null)
+        {
+            carnetVisual.datos = persona.carnetMostrado;
+            carnetVisual.ResetearCarnet();
+
+            if (puntoCarnet != null)
+            {
+                carnetVisual.transform.position = puntoCarnet.position;
+                carnetVisual.transform.rotation = puntoCarnet.rotation;
+                carnetVisual.transform.localScale = puntoCarnet.localScale;
+            }
+
+            carnetVisual.gameObject.SetActive(true);
+        }
+        else
+        {
+            Debug.LogWarning("No hay Carnet visual asignado en RevisionManager.");
+        }
+
+        if (textoResultados != null)
+        {
+            textoResultados.text = "Esperando escaneo del carnet...";
+        }
     }
 
    public void Permitir()
@@ -153,7 +197,7 @@ public class RevisionManager : MonoBehaviour
 
         if (alumnoReal.fotoID != carnetActual.fotoID) return false;
 
-        if (carnetActual.turno <= GameClock.TurnoGlobal) return false;
+        if (carnetActual.turno > GameClock.TurnoGlobal) return false;
 
         if (carnetActual.area != areaGlobal) return false;
 
@@ -208,6 +252,7 @@ public class RevisionManager : MonoBehaviour
 
         if (carnetVisual != null)
         {
+            carnetVisual.ResetearCarnet();
             carnetVisual.gameObject.SetActive(false);
         }
         
