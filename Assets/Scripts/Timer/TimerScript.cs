@@ -11,8 +11,8 @@ public class GameClock : MonoBehaviour
 
     public TextMeshProUGUI clockText;
 
-    public int HoraInicio = 11;
-    public int MinutoInicio = 55;
+    public int HoraInicio = 12;
+    public int MinutoInicio = 0;
 
     public int HoraFinal = 14;
     public int MinutoFinal = 30;
@@ -61,6 +61,10 @@ public class GameClock : MonoBehaviour
             {
                 RelojActivo = false;
                 Debug.Log("Fin del juego");
+                if (DayManager.instance != null)
+                {
+                    DayManager.instance.EndDay();
+                }
             }
         }
     }

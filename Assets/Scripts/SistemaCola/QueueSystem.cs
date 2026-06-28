@@ -118,6 +118,13 @@ public class QueueSystem : MonoBehaviour
         MandarSiguientePersona();
     }
 
+    public void TerminarAtencion()
+    {
+        atencionActiva = false;
+        cola.Clear();
+        Debug.Log("Fin de la atencion. Cola vaciada.");
+    }
+
     public void MandarSiguientePersona()
     {
         if (!atencionActiva)

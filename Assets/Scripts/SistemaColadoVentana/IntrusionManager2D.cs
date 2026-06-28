@@ -1,7 +1,7 @@
-using System.Collections;
+ï»¿using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
-// Donde va el GameObject del intruso, el punto de spawn y el punto de entrada a la habitación. También se pueden configurar las probabilidades y eventos relacionados con la intrusión.
+
 public class IntrusionManager2D : MonoBehaviour
 {
     [Header("Probability Settings")]
@@ -123,7 +123,6 @@ public class IntrusionManager2D : MonoBehaviour
         Vector3 start = currentIntruder.transform.position;
         Vector3 end = windowEntryTarget.position;
 
-        // En 2D mantenemos la Z original para evitar problemas de sorting.
         end.z = start.z;
 
         while (timer < entryDuration)
@@ -152,6 +151,11 @@ public class IntrusionManager2D : MonoBehaviour
 
             Intruder2D intruder = currentIntruder.GetComponent<Intruder2D>();
             intruder?.OnReachedRoom();
+
+            if (EconomyManager.instance != null)
+            {
+                EconomyManager.instance.RegistrarPenalizacion("Intruso por la ventana", EconomyManager.instance.multaIntrusoVentana);
+            }
         }
 
         OnIntrusionComplete?.Invoke();

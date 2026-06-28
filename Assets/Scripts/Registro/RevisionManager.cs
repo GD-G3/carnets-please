@@ -147,6 +147,18 @@ public class RevisionManager : MonoBehaviour
         {
             Debug.Log("Error: no debia pasar.");
             textoResultados.text = "Error: no debia pasar.";
+            
+            if (EconomyManager.instance != null)
+            {
+                if (personaActual.esColado)
+                {
+                    EconomyManager.instance.RegistrarPenalizacion("Dejó entrar colado", EconomyManager.instance.multaPermitirColado);
+                }
+                else
+                {
+                    EconomyManager.instance.RegistrarPenalizacion("Aprobación incorrecta", EconomyManager.instance.multaAprobacionIncorrecta);
+                }
+            }
         }
 
         SiguientePersona();
@@ -167,6 +179,11 @@ public class RevisionManager : MonoBehaviour
         {
             Debug.Log("Error: si debia pasar.");
             textoResultados.text = "Error: si debia pasar.";
+
+            if (EconomyManager.instance != null)
+            {
+                EconomyManager.instance.RegistrarPenalizacion("Rechazo injustificado", EconomyManager.instance.multaRechazoInjustificado);
+            }
         }
 
         SiguientePersona();
@@ -266,5 +283,27 @@ public class RevisionManager : MonoBehaviour
         }
     }
 
+    public void LimpiarMesa()
+    {
+        personaActual = null;
+        carnetActual = null;
 
+        if (carnetVisual != null)
+        {
+            carnetVisual.gameObject.SetActive(false);
+        }
+
+        if (fotoCarnetImage != null)
+        {
+            fotoCarnetImage.sprite = null;
+            fotoCarnetImage.enabled = false;
+        }
+
+        if (textoResultados != null)
+        {
+            textoResultados.text = "Turno finalizado.";
+        }
+        
+        StopAllCoroutines();
+    }
 }
