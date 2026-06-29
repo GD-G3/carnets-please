@@ -35,7 +35,7 @@ public class ColaLibreManager : MonoBehaviour
     public float probabilidadActual = 0.9f;
 
     [Range(0f, 1f)]
-    public float factorReduccionPorTanda = 0.5f;
+    public float factorReduccionPorTanda = 0.25f;
 
     private float timerGeneracion;
 
