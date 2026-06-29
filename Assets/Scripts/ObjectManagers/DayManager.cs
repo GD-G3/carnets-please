@@ -98,7 +98,7 @@ public class DayManager : MonoBehaviour
         if (queueSystem != null)
         {
             // Más probabilidad de que generen estudiantes rápido
-            queueSystem.probabilidadGenerarEstudiante = Mathf.Lerp(0.3f, 0.8f, factorDificultad);
+            queueSystem.probabilidadDuranteAtencion = Mathf.Lerp(0.3f, 0.8f, factorDificultad);
             
             // Insertar colados más a menudo en días difíciles
             // En el update del queueSystem no hay un método automático, pero podríamos añadirlo.

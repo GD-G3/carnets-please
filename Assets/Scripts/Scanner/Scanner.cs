@@ -140,7 +140,6 @@ public class Scanner : MonoBehaviour, IPointerDownHandler
 
     private void RegistrarCarnet(Carnet carnet)
     {
-        Debug.Log("¡Escáner pasó por encima de un carnet volteado!");
         if (RevisionManager.instance != null)
         {
             RevisionManager.instance.RecibirDatosEscaneados(carnet.datos);

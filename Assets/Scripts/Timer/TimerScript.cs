@@ -6,6 +6,7 @@ public class GameClock : MonoBehaviour
 {
     public static event Action OnGameStarted;
     public static event Action<int> OnTurnoChanged;
+    public static event Action<int, int> OnTimeChanged;
 
     public static int TurnoGlobal = 0;
 
@@ -37,6 +38,8 @@ public class GameClock : MonoBehaviour
 
         ActualizarTurnoGlobal();
         UpdateClockText();
+
+        OnTimeChanged?.Invoke(HoraActual, MinutoActual);
     }
 
     void Update()
@@ -54,6 +57,8 @@ public class GameClock : MonoBehaviour
             AddGameMinutes(MinutosdelJuegoporTick);
             UpdateClockText();
             ActualizarTurnoGlobal();
+
+            OnTimeChanged?.Invoke(HoraActual, MinutoActual);
 
             CheckGameStart();
 

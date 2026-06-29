@@ -25,6 +25,9 @@ public class RevisionManager : MonoBehaviour
     [Header("Resultados")]
     public TMP_Text textoResultados;
 
+    [Header("Estado de revision")]
+    public bool hayPersonaEnRevision = false;
+
     [Header("Configuracion")]
     public int areaGlobal = 1;
 
@@ -44,6 +47,10 @@ public class RevisionManager : MonoBehaviour
 
     private void Start()
     {
+        personaActual = null;
+        carnetActual = null;
+        hayPersonaEnRevision = false;
+
         if (carnetVisual != null)
         {
             carnetVisual.gameObject.SetActive(false);
@@ -65,6 +72,7 @@ public class RevisionManager : MonoBehaviour
     {
         personaActual = nuevaPersona;
         carnetActual = null;
+        hayPersonaEnRevision = true;
 
         if (carnetVisual != null)
         {
@@ -79,7 +87,6 @@ public class RevisionManager : MonoBehaviour
 
         StartCoroutine(MostrarCarnetDespuesDeEspera(nuevaPersona));
 
-        Debug.Log("Nueva persona recibida para revision.");
     }
 
     public void RecibirDatosEscaneados(CarnetData datos)
@@ -94,8 +101,6 @@ public class RevisionManager : MonoBehaviour
         textoResultados.text = $"{datos.NombreTexto()}\t{datos.codigo}\nTurno {datos.turno}\nFacultad: {datos.facultad}\nCarrera: {datos.carrera}\nVence: {datos.diaVencimiento:00}/{datos.mesVencimiento:00}/{datos.anioVencimiento}";
         
         MostrarFotoDelCarnet(datos.fotoID);
-
-        Debug.Log("Datos mostrados en la pantalla");
     }
 
     private IEnumerator MostrarCarnetDespuesDeEspera(PersonaEnCola persona)
@@ -140,12 +145,10 @@ public class RevisionManager : MonoBehaviour
 
         if (debePasar)
         {
-            Debug.Log("Correcto: debia pasar.");
             textoResultados.text = "Correcto: debia pasar.";
         }
         else
         {
-            Debug.Log("Error: no debia pasar.");
             textoResultados.text = "Error: no debia pasar.";
             
             if (EconomyManager.instance != null)
@@ -172,12 +175,10 @@ public class RevisionManager : MonoBehaviour
 
         if (!debePasar)
         {
-            Debug.Log("Correcto: debia ser rechazado.");
             textoResultados.text = "Correcto: debia ser rechazado.";
         }
         else
         {
-            Debug.Log("Error: si debia pasar.");
             textoResultados.text = "Error: si debia pasar.";
 
             if (EconomyManager.instance != null)
@@ -266,6 +267,7 @@ public class RevisionManager : MonoBehaviour
         Debug.Log("Siguiente persona...");
         personaActual = null;
         carnetActual = null;
+        hayPersonaEnRevision = false;
 
         if (carnetVisual != null)
         {

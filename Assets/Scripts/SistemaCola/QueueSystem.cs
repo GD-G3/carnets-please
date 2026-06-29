@@ -7,11 +7,18 @@ public class QueueSystem : MonoBehaviour
 
     [Header("Cola")]
     public List<PersonaEnCola> cola = new List<PersonaEnCola>();
-    public int maxPersonasEnCola = 6;
+    public int maxPersonasEnCola = 80;
 
-    [Header("Generacion continua")]
+    [Header("Probabilidades por etapa")]
     [Range(0f, 1f)]
-    public float probabilidadGenerarEstudiante = 0.5f;
+    public float probabilidadAntesDeAtencion = 0.9f;
+
+    [Range(0f, 1f)]
+    public float probabilidadDuranteAtencion = 0.5f;
+
+    [Range(0f, 1f)]
+    public float probabilidadGenerarEstudiante = 0.9f;
+    
     public float segundosEntreIntentos = 3f;
     private float timerGeneracion;
 
@@ -43,7 +50,11 @@ public class QueueSystem : MonoBehaviour
 
     private void Start()
     {
-        GenerarColaInicial();
+        cola.Clear();
+
+        probabilidadGenerarEstudiante = probabilidadAntesDeAtencion;
+
+        Debug.Log("QueueSystem iniciado. Probabilidad antes de atencion: " + probabilidadGenerarEstudiante);
     }
 
     private void Update()
@@ -51,23 +62,8 @@ public class QueueSystem : MonoBehaviour
         IntentarGenerarEstudianteConTiempo();
     }
 
-    private void GenerarColaInicial()
-    {
-        cola.Clear();
-
-        for (int i = 0; i < maxPersonasEnCola; i++)
-        {
-            PersonaEnCola persona = CrearPersonaNormal();
-            cola.Add(persona);
-        }
-
-        Debug.Log("Cola inicial generada. Personas en cola: " + cola.Count);
-    }
-
     private void IntentarGenerarEstudianteConTiempo()
     {
-        if (!atencionActiva) return;
-        
         if (cola.Count >= maxPersonasEnCola) return;
 
         timerGeneracion += Time.deltaTime;
@@ -83,7 +79,7 @@ public class QueueSystem : MonoBehaviour
 
                 Debug.Log("Nuevo estudiante generado. Personas en cola: " + cola.Count);
 
-                if (!HayPersonaEnRevision())
+                if (atencionActiva && !HayPersonaEnRevision())
                 {
                     MandarSiguientePersona();
                 }
@@ -113,7 +109,11 @@ public class QueueSystem : MonoBehaviour
     public void EmpezarAtencion()
     {
         atencionActiva = true;
+
+        probabilidadGenerarEstudiante = probabilidadDuranteAtencion;
+
         Debug.Log("Empieza la atencion de la cola.");
+        Debug.Log("Probabilidad durante atencion: " + probabilidadGenerarEstudiante);
 
         MandarSiguientePersona();
     }
@@ -130,6 +130,12 @@ public class QueueSystem : MonoBehaviour
         if (!atencionActiva)
         {
             Debug.Log("La atencion todavia no ha empezado.");
+            return;
+        }
+
+        if (HayPersonaEnRevision())
+        {
+            Debug.Log("Ya hay una persona en revision.");
             return;
         }
 
@@ -155,6 +161,32 @@ public class QueueSystem : MonoBehaviour
         Debug.Log("Persona enviada a revision.");
     }
 
+    public bool AgregarPersonaACola(PersonaEnCola persona)
+    {
+        if (persona == null)
+        {
+            Debug.LogWarning("Intentaste agregar una persona nula a la cola.");
+            return false;
+        }
+
+        if (cola.Count >= maxPersonasEnCola)
+        {
+            Debug.Log("La cola principal está llena.");
+            return false;
+        }
+
+        cola.Add(persona);
+
+        Debug.Log("Persona agregada a la cola principal. Total: " + cola.Count);
+
+        if (atencionActiva && !HayPersonaEnRevision())
+        {
+            MandarSiguientePersona();
+        }
+
+        return true;
+    }
+
     public void InsertarColado()
     {
         PersonaEnCola colado = CrearPersonaNormal();
@@ -177,6 +209,6 @@ public class QueueSystem : MonoBehaviour
     {
         if (revisionManager == null) return false;
 
-        return revisionManager.personaActual != null;
+        return revisionManager.hayPersonaEnRevision;
     }
 }
