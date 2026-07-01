@@ -144,16 +144,29 @@ public class DayManager : MonoBehaviour
     public void AvanzarSiguienteDia()
     {
         // Revisar Game Over por bancarrota
-        if (EconomyManager.instance != null && EconomyManager.instance.dineroTotal <= 0)
+        /*if (EconomyManager.instance != null && EconomyManager.instance.dineroTotal < 0)
         {
             if (EndDayScene.instance != null) EndDayScene.instance.MostrarGameOver();
             return;
-        }
+        }*/
 
         // Revisar si completó todos los días (Victoria)
         if (diaActual >= diaMaximo)
         {
-            if (EndDayScene.instance != null) EndDayScene.instance.MostrarVictoria();
+            if (EndDayScene.instance != null && EndDayScene.instance.panelFinDeDia != null)
+            {
+                EndDayScene.instance.panelFinDeDia.SetActive(false);
+            }
+
+            if (EndingManager.instance != null)
+            {
+                EndingManager.instance.MostrarFinal();
+            }
+            else
+            {
+                Debug.LogWarning("No existe EndingManager en la escena.");
+            }
+
             return;
         }
 

@@ -16,6 +16,9 @@ public class EconomyManager : MonoBehaviour
     public float multaPermitirColado = 30f;
     public float multaIntrusoVentana = 50f;
 
+    [Header("Advertencias")]
+    public int diasConDineroNegativo = 0;
+
     // Registro del día actual
     public struct Penalizacion
     {
@@ -73,7 +76,7 @@ public class EconomyManager : MonoBehaviour
 
         // El pago puede ser negativo si comete muchos errores.
         // min S/0
-        float pagoFinal = Mathf.Max(0f, salarioBasePorDia - totalMultas);
+        float pagoFinal = salarioBasePorDia - totalMultas;
         return pagoFinal;
     }
 
@@ -81,7 +84,12 @@ public class EconomyManager : MonoBehaviour
     {
         float pago = CalcularPagoDelDia();
         dineroTotal += pago;
-        Debug.Log($"Fin del día. Pago: S/ {pago}. Dinero total: S/ {dineroTotal}");
+
+        if (dineroTotal < 0)
+        {
+            diasConDineroNegativo++;
+
+        }
     }
 
     public List<Penalizacion> ObtenerPenalizacionesDelDia()

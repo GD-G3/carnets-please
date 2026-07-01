@@ -143,6 +143,11 @@ public class RevisionManager : MonoBehaviour
 
         bool debePasar = DebePasar();
 
+        if (GameStatsManager.instance != null)
+        {
+            GameStatsManager.instance.RegistrarPermitir(debePasar, personaActual.esColado);
+        }
+
         if (debePasar)
         {
             textoResultados.text = "Correcto: debia pasar.";
@@ -171,7 +176,12 @@ public class RevisionManager : MonoBehaviour
     {
         if (!PuedeDecidir()) return;
 
-        bool debePasar = DebePasar();
+        bool debePasar = DebePasar();   
+
+        if (GameStatsManager.instance != null)
+        {
+            GameStatsManager.instance.RegistrarRechazar(!debePasar);
+        }
 
         if (!debePasar)
         {
