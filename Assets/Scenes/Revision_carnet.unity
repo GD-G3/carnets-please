@@ -138,7 +138,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &51781345
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3902,6 +3902,7 @@ MonoBehaviour:
   - Marco
   - Alejandro
   - Sebastian
+  - Ihann
   nombresMujer:
   - Marta
   - Keyra
@@ -3919,6 +3920,7 @@ MonoBehaviour:
   - Rivera
   - Cueva
   - Quispe
+  - Benavides
 --- !u!1 &1329800229
 GameObject:
   m_ObjectHideFlags: 0
@@ -4275,46 +4277,56 @@ MonoBehaviour:
   facultades:
   - nombreFacultad: FC
     carreras:
-    - fc1
-    - fc2
-    - fc3
-    - fc4
-    - fc5
+    - "Ciencias de la Computaci\xF3n"
+    - "F\xEDsica"
+    - "Matem\xE1tica"
+    - "Qu\xEDmica"
+    - "Ingenier\xEDa F\xEDsica"
   - nombreFacultad: FIEECS
     carreras:
-    - fieecs1
-    - fieecs2
+    - "Ingenier\xEDa Econ\xF3mica"
+    - "Ingenier\xEDa Estad\xEDstica"
   - nombreFacultad: FIEE
     carreras:
-    - fiee1
-    - fiee2
+    - "Ingenier\xEDa El\xE9ctrica"
+    - "Ingenier\xEDa Electr\xF3nica"
+    - "Ingenier\xEDa de Telecomunicaciones"
+    - "Ingenier\xEDa de Ciberseguridad"
+    - "Ingenier\xEDa Biom\xE9dica"
   - nombreFacultad: FIA
     carreras:
-    - fia1
-    - fia2
+    - "Ingenier\xEDa Sanitaria"
+    - "Ingenier\xEDa de Higiene y Seguridad Industrial"
+    - "Ingenier\xEDa Ambiental"
   - nombreFacultad: FIC
     carreras:
-    - fic1
+    - "Ingenier\xEDa Civil"
   - nombreFacultad: FAUA
     carreras:
-    - faua1
-    - faua2
+    - Urbanismo
+    - Arquitectura
   - nombreFacultad: FIIS
     carreras:
-    - fiis1
-    - fiis2
+    - "Ingenier\xEDa Industrial"
+    - "Ingenier\xEDa de Sistemas"
+    - "Ingenier\xEDa de Software"
+    - "Ingenier\xEDa de Inteligencia Artificial"
   - nombreFacultad: FIM
     carreras:
-    - fim1
-    - fim2
+    - "Ingenier\xEDa Mec\xE1nica"
+    - "Ingenier\xEDa Mec\xE1nica y Electrica"
+    - "Ingenier\xEDa Naval"
+    - "Ingenier\xEDa Mecatr\xF3nica"
+    - "Ingenier\xEDa Aeroespacial"
   - nombreFacultad: FIGMM
     carreras:
-    - figmm1
-    - figmm2
+    - "Ingenier\xEDa Geol\xF3gica"
+    - "Ingenier\xEDa Metal\xFArgica"
+    - "Ingenier\xEDa de Minas"
   - nombreFacultad: FIQT
     carreras:
-    - fiqt1
-    - fiqt2
+    - "Ingenier\xEDa Textil"
+    - "Ingenier\xEDa Qu\xEDmica"
 --- !u!4 &1390877580
 Transform:
   m_ObjectHideFlags: 0
