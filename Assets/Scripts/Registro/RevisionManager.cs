@@ -24,6 +24,7 @@ public class RevisionManager : MonoBehaviour
 
     [Header("Resultados")]
     public TMP_Text textoResultados;
+    public TMP_Text textoCola;
 
     [Header("Estado de revision")]
     public bool hayPersonaEnRevision = false;
@@ -73,6 +74,7 @@ public class RevisionManager : MonoBehaviour
         personaActual = nuevaPersona;
         carnetActual = null;
         hayPersonaEnRevision = true;
+        textoCola.text = "";
 
         if (carnetVisual != null)
         {
@@ -99,7 +101,11 @@ public class RevisionManager : MonoBehaviour
 
         carnetActual = datos;
         textoResultados.text = $"{datos.NombreTexto()}\t{datos.codigo}\nTurno {datos.turno}\nFacultad: {datos.facultad}\nCarrera: {datos.carrera}\nVence: {datos.diaVencimiento:00}/{datos.mesVencimiento:00}/{datos.anioVencimiento}";
-        
+        if (personaActual != null && personaActual.vieneDeColaLibre) {
+            textoCola.text = "COLA LIBRE";
+        } else {
+            textoCola.text = "";
+        }
         MostrarFotoDelCarnet(datos.fotoID);
     }
 
@@ -225,7 +231,11 @@ public class RevisionManager : MonoBehaviour
 
         if (alumnoReal.fotoID != carnetActual.fotoID) return false;
 
-        if (carnetActual.turno > GameClock.TurnoGlobal) return false;
+        if (!personaActual.vieneDeColaLibre)
+        {
+            if (carnetActual.turno > GameClock.TurnoGlobal)
+                return false;
+        }
 
         if (carnetActual.area != areaGlobal) return false;
 
@@ -278,6 +288,7 @@ public class RevisionManager : MonoBehaviour
         personaActual = null;
         carnetActual = null;
         hayPersonaEnRevision = false;
+        textoCola.text = "";
 
         if (carnetVisual != null)
         {

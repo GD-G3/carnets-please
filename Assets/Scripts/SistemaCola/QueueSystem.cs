@@ -84,10 +84,6 @@ public class QueueSystem : MonoBehaviour
                     MandarSiguientePersona();
                 }
             }
-            else
-            {
-                Debug.Log("No se genero estudiante en este intento.");
-            }
         }
     }
 
@@ -102,6 +98,7 @@ public class QueueSystem : MonoBehaviour
         persona.carnetMostrado = carnet;
         persona.esColado = false;
         persona.fueDetectadoPorCamara = false;
+        persona.vieneDeColaLibre = false;
 
         return persona;
     }
@@ -112,7 +109,7 @@ public class QueueSystem : MonoBehaviour
 
         probabilidadGenerarEstudiante = probabilidadDuranteAtencion;
 
-        Debug.Log("Empieza la atencion de la cola.");
+        Debug.Log("🔥 EmpezarAtencion ejecutado");
         Debug.Log("Probabilidad durante atencion: " + probabilidadGenerarEstudiante);
 
         MandarSiguientePersona();

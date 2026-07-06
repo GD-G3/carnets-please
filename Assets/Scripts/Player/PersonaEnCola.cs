@@ -6,4 +6,5 @@ public class PersonaEnCola
 
     public bool esColado;
     public bool fueDetectadoPorCamara;
+    public bool vieneDeColaLibre;
 }

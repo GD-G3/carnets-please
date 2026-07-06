@@ -74,7 +74,7 @@ public class GameClock : MonoBehaviour
         }
     }
 
-void CheckGameStart()
+    void CheckGameStart()
     {
         if (JuegoEmpezo) return;
 

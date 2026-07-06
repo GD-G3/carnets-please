@@ -133,6 +133,7 @@ public class ColaLibreManager : MonoBehaviour
         if (UnityEngine.Random.value < probabilidadActual)
         {
             PersonaEnCola nuevaPersona = CrearPersonaLibre();
+            
             colaLibre.Add(nuevaPersona);
 
             personasCreadas++;
@@ -162,7 +163,6 @@ public class ColaLibreManager : MonoBehaviour
         {
             PersonaEnCola persona = colaLibre[0];
             colaLibre.RemoveAt(0);
-
             bool agregada = queueSystem.AgregarPersonaACola(persona);
 
             if (agregada)
@@ -203,6 +203,8 @@ public class ColaLibreManager : MonoBehaviour
         persona.carnetMostrado = carnet;
         persona.esColado = false;
         persona.fueDetectadoPorCamara = false;
+        persona.vieneDeColaLibre = true;
+        persona.carnetMostrado.turno = Random.Range(1, 11);
 
         return persona;
     }

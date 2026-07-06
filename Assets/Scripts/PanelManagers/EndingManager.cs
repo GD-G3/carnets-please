@@ -23,9 +23,9 @@ public class EndingManager : MonoBehaviour
     public int personasPermitidasMinimas = 10;
 
     [Header("Condiciones final malo")]
-    public int faltasMinimasFinalMalo = 12;
+    public int faltasMinimasFinalMalo = 30;
     public int coladosPermitidosMinimos = 10;
-    public int rechazosInjustificadosMinimos = 8;
+    public int rechazosInjustificadosMinimos = 20;
     public int advertenciasNegativasMinimas = 3;
 
     [Header("Condiciones final mediocre")]
