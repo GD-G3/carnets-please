@@ -137,12 +137,6 @@ public class ColaLibreManager : MonoBehaviour
             colaLibre.Add(nuevaPersona);
 
             personasCreadas++;
-
-            Debug.Log(
-                "Llegó persona a cola libre. Cola libre: " + colaLibre.Count +
-                " | Creadas: " + personasCreadas + "/" + totalPersonasQueLlegaran +
-                " | Prob: " + probabilidadActual
-            );
         }
     }
 
@@ -177,12 +171,6 @@ public class ColaLibreManager : MonoBehaviour
                 break;
             }
         }
-
-        Debug.Log(
-            "Tanda liberada hacia cola principal: " + liberados +
-            " | Quedan en cola libre: " + colaLibre.Count +
-            " | Personas liberadas total: " + personasLiberadasTotal
-        );
 
         if (liberados > 0)
             {
@@ -221,7 +209,5 @@ public class ColaLibreManager : MonoBehaviour
     private void ReducirProbabilidadPorTanda()
     {
         probabilidadActual *= factorReduccionPorTanda;
-
-        Debug.Log("Nueva probabilidad de llegada a cola libre: " + probabilidadActual);
     }
 }

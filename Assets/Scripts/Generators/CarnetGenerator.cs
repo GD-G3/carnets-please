@@ -99,15 +99,11 @@ public class CarnetGenerator : MonoBehaviour
 
         carnet.facultad = alumnoFalso.facultad;
         carnet.carrera = alumnoFalso.carrera;
-
-        Debug.Log("Carnet con error de identificacion.");
     }
 
     private void AplicarErrorArea(CarnetData carnet)
     {
         carnet.area = 2;
-
-        Debug.Log("Carnet con error de area.");
     }
 
     private void AplicarErrorTurno(CarnetData carnet)
@@ -118,7 +114,6 @@ public class CarnetGenerator : MonoBehaviour
         {
             // aplicar error con un turno futuro.
             carnet.turno = UnityEngine.Random.Range(turnoActual + 1, maxTurno + 1);
-            Debug.Log("Carnet con error de turno.");
         }
         
     }
@@ -138,7 +133,6 @@ public class CarnetGenerator : MonoBehaviour
             carnet.diaVencimiento = 31;
         }
 
-        Debug.Log("Carnet con fecha vencida.");
     }
     
     //metodos auxiliares 

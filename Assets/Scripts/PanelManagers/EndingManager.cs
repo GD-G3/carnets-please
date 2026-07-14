@@ -158,4 +158,26 @@ public class EndingManager : MonoBehaviour
                 return "Final no encontrado.";
         }
     }
+
+    public void MostrarFinalAhogamiento()
+    {
+        if (panelFinal != null)
+        {
+            panelFinal.SetActive(true);
+        }
+
+        if (textoFinal != null)
+        {
+            textoFinal.text =
+                "<size=42><b>FINAL MALO</b></size>\n\n" +
+                "Mantuviste la ventana cerrada durante demasiado tiempo.\n" +
+                "La falta de ventilación provocó que los alumnos del comedor " +
+                "comenzaran a quedarse sin aire.\n\n" +
+                "La administración te responsabiliza por lo ocurrido " +
+                "y te retira inmediatamente del puesto.\n\n" +
+                "<b>Resultado: asfixiaste a los alumnos.</b>";
+        }
+
+        Time.timeScale = 0f;
+    }
 }

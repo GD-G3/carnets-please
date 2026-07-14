@@ -77,8 +77,6 @@ public class QueueSystem : MonoBehaviour
                 PersonaEnCola nuevaPersona = CrearPersonaNormal();
                 cola.Add(nuevaPersona);
 
-                Debug.Log("Nuevo estudiante generado. Personas en cola: " + cola.Count);
-
                 if (atencionActiva && !HayPersonaEnRevision())
                 {
                     MandarSiguientePersona();
@@ -174,8 +172,6 @@ public class QueueSystem : MonoBehaviour
 
         cola.Add(persona);
 
-        Debug.Log("Persona agregada a la cola principal. Total: " + cola.Count);
-
         if (atencionActiva && !HayPersonaEnRevision())
         {
             MandarSiguientePersona();
@@ -188,11 +184,17 @@ public class QueueSystem : MonoBehaviour
     {
         PersonaEnCola colado = CrearPersonaNormal();
         colado.esColado = true;
+        colado.vieneDeColaLibre = false;
 
         int posicion = UnityEngine.Random.Range(0, cola.Count + 1);
         cola.Insert(posicion, colado);
 
         Debug.Log("Colado insertado en la cola en la posicion: " + posicion);
+
+        if (atencionActiva && !HayPersonaEnRevision())
+        {
+            MandarSiguientePersona();
+        }
     }
 
     public void CambiarProbabilidadGeneracion(float nuevaProbabilidad)

@@ -106,8 +106,6 @@ public class GameClock : MonoBehaviour
         {
             TurnoGlobal = nuevoTurno;
 
-            Debug.Log("Turno global actual: " + TurnoGlobal);
-
             OnTurnoChanged?.Invoke(TurnoGlobal);
         }
     }

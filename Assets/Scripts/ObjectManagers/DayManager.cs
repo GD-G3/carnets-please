@@ -9,9 +9,10 @@ public class DayManager : MonoBehaviour
     public int diaActual = 1;
     public int diaMaximo = 5;
 
-    [Header("Referencias Opcionales")]
+    [Header("Referencias")]
     public QueueSystem queueSystem;
     public CarnetGenerator carnetGenerator;
+    public CameraThreatManager cameraThreatManager;
 
     public event Action<int> OnDayStarted;
     public event Action OnAllDaysCompleted;
@@ -42,6 +43,7 @@ public class DayManager : MonoBehaviour
 
     private void OnSceneLoaded(UnityEngine.SceneManagement.Scene scene, UnityEngine.SceneManagement.LoadSceneMode mode)
     {
+        cameraThreatManager = FindAnyObjectByType<CameraThreatManager>();
         queueSystem = UnityEngine.Object.FindAnyObjectByType<QueueSystem>();
         carnetGenerator = UnityEngine.Object.FindAnyObjectByType<CarnetGenerator>();
         StartDay();
@@ -77,6 +79,7 @@ public class DayManager : MonoBehaviour
         
         // Ajustar dificultad según el día
         AjustarDificultad();
+        MostrarConfiguracionDelDia();
 
         // Notificar a otros sistemas (como EconomyManager)
         if (EconomyManager.instance != null)
@@ -92,8 +95,19 @@ public class DayManager : MonoBehaviour
     {
         // En base al día actual, aumentamos la dificultad.
         // Día 1 es fácil (tutorial), el Día 5 es el más difícil.
+
+        if (cameraThreatManager != null)
+        {
+            cameraThreatManager.oxygenWarningTime = 30f - (diaActual) * 5f;
+            cameraThreatManager.oxygenGameOverTime = 60f - (diaActual) * 10f;
+
+            cameraThreatManager.PhaseInterval = 25f - (diaActual - 1) * 4f;
+
+            cameraThreatManager.FinalPhaseWaitTime = 8f - (diaActual - 1) * 1f;
+        }
         
         float factorDificultad = (float)(diaActual - 1) / (diaMaximo - 1); // 0 a 1
+        
 
         if (queueSystem != null)
         {
@@ -174,5 +188,49 @@ public class DayManager : MonoBehaviour
         diaActual++;
         diaIniciado = false;
         UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
+    }
+
+    private void MostrarConfiguracionDelDia()
+    {
+        string mensaje = $"=== CONFIGURACIÓN DEL DÍA {diaActual} ===\n";
+
+        if (queueSystem != null)
+        {
+            mensaje +=
+                $"Probabilidad cola antes de atención: {queueSystem.probabilidadAntesDeAtencion:P0}\n" +
+                $"Probabilidad cola durante atención: {queueSystem.probabilidadDuranteAtencion:P0}\n" +
+                $"Segundos entre intentos: {queueSystem.segundosEntreIntentos:0.00}\n";
+        }
+        else
+        {
+            mensaje += "QueueSystem: NO ENCONTRADO\n";
+        }
+
+        if (carnetGenerator != null)
+        {
+            mensaje +=
+                $"Error identificación: {carnetGenerator.probErrorIdentificacion:P0}\n" +
+                $"Error área: {carnetGenerator.probErrorArea:P0}\n" +
+                $"Error turno: {carnetGenerator.probErrorTurno:P0}\n" +
+                $"Carnet vencido: {carnetGenerator.probFechaVencida:P0}\n";
+        }
+        else
+        {
+            mensaje += "CarnetGenerator: NO ENCONTRADO\n";
+        }
+
+        if (cameraThreatManager != null)
+        {
+            mensaje +=
+                $"Oxígeno para Game Over: {cameraThreatManager.oxygenGameOverTime:0.00} s\n" +
+                $"Intervalo entre fases: {cameraThreatManager.PhaseInterval:0.00} s\n" +
+                $"Espera en fase final: {cameraThreatManager.FinalPhaseWaitTime:0.00} s\n";
+        }
+        else
+        {
+            mensaje += "CameraThreatManager: NO ENCONTRADO\n";
+        }
+
+        Debug.Log(mensaje);
     }
 }
