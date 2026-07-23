@@ -7,7 +7,11 @@ public class Alumno
 
     public string codigo;
 
-    public int fotoID;
+    public RasgosFaciales rasgosFaciales;
+
+    public int pantalonID;
+    public int poloID;
+    public int zapatosID;
 
     public string facultad;
     public string carrera;

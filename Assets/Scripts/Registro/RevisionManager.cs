@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
 public class RevisionManager : MonoBehaviour
 {
@@ -18,10 +19,6 @@ public class RevisionManager : MonoBehaviour
     [Header("Posicion del carnet")]
     public Transform puntoCarnet;   
 
-    [Header("Imagen del carnet")]
-    public Image fotoCarnetImage;
-    public FotoDatabase fotoDatabase;
-
     [Header("Resultados")]
     public TMP_Text textoResultados;
     public TMP_Text textoCola;
@@ -33,12 +30,48 @@ public class RevisionManager : MonoBehaviour
     public int areaGlobal = 1;
 
     [Header("Segundos de espera")]
-    public float segundosEntreEstudiantes = 3f;
+    public float segundosEntreEstudiantes = 0f;
 
     [Header("Fecha actual")]
     public int diaActual = 21;
     public int mesActual = 6;
     public int anioActual = 2026;
+    
+    [Header("Personaje visual")]
+    public QueueCharacterManager queueCharacterManager;
+
+    [Header("Foto modular del carnet")]
+    public GameObject fotoCarnetContainer;
+
+    [Header("Foto modular mostrada en pantalla")]
+    public Image cabezaFotoImage;
+    public Image ojosFotoImage;
+    public Image cejasFotoImage;
+    public Image narizFotoImage;
+    public Image bocaFotoImage;
+    public Image cabelloFotoImage;
+
+    [Header("Sprites fijos hombre")]
+    public Sprite cabezaHombre;
+    public Sprite narizHombre;
+
+    [Header("Sprites fijos mujer")]
+    public Sprite cabezaMujer;
+    public Sprite narizMujer;
+
+    [Header("Rasgos hombre")]
+    public Sprite[] ojosHombre;
+    public Sprite[] cejasHombre;
+    public Sprite[] bocasHombre;
+    public Sprite[] cabellosHombre;
+
+    [Header("Rasgos mujer")]
+    public Sprite[] ojosMujer;
+    public Sprite[] cejasMujer;
+    public Sprite[] bocasMujer;
+    public Sprite[] cabellosMujer;
+
+    private String textoExtra;
 
     private void Awake()
     {
@@ -57,10 +90,9 @@ public class RevisionManager : MonoBehaviour
             carnetVisual.gameObject.SetActive(false);
         }
 
-        if (fotoCarnetImage != null)
+        if (fotoCarnetContainer != null)
         {
-            fotoCarnetImage.sprite = null;
-            fotoCarnetImage.enabled = false;
+            fotoCarnetContainer.SetActive(false);
         }
 
         if (textoResultados != null)
@@ -81,13 +113,7 @@ public class RevisionManager : MonoBehaviour
             carnetVisual.gameObject.SetActive(false);
         }
 
-        if (fotoCarnetImage != null)
-        {
-            fotoCarnetImage.sprite = null;
-            fotoCarnetImage.enabled = false;
-        }
-
-        StartCoroutine(MostrarCarnetDespuesDeEspera(nuevaPersona));
+        MostrarCarnet(nuevaPersona);
 
     }
 
@@ -101,21 +127,25 @@ public class RevisionManager : MonoBehaviour
 
         carnetActual = datos;
         textoResultados.text = $"{datos.NombreTexto()}\t{datos.codigo}\nTurno {datos.turno}\nFacultad: {datos.facultad}\nCarrera: {datos.carrera}\nVence: {datos.diaVencimiento:00}/{datos.mesVencimiento:00}/{datos.anioVencimiento}";
+        
         if (personaActual != null && personaActual.vieneDeColaLibre) {
             textoCola.text = "COLA LIBRE";
         } else {
             textoCola.text = "";
         }
-        MostrarFotoDelCarnet(datos.fotoID);
+
+        if (fotoCarnetContainer != null)
+        {
+            fotoCarnetContainer.SetActive(true);
+        }
+        MostrarFotoCarnet(datos);
     }
 
-    private IEnumerator MostrarCarnetDespuesDeEspera(PersonaEnCola persona)
+    private void MostrarCarnet(PersonaEnCola persona)
     {
-        yield return new WaitForSeconds(segundosEntreEstudiantes);
-
         if (personaActual != persona)
         {
-            yield break;
+            return;
         }
 
         if (carnetVisual != null)
@@ -131,10 +161,6 @@ public class RevisionManager : MonoBehaviour
             }
 
             carnetVisual.gameObject.SetActive(true);
-        }
-        else
-        {
-            Debug.LogWarning("No hay Carnet visual asignado en RevisionManager.");
         }
 
         if (textoResultados != null)
@@ -160,7 +186,7 @@ public class RevisionManager : MonoBehaviour
         }
         else
         {
-            textoResultados.text = "Error: no debia pasar.";
+            textoResultados.text = "Error: no debia pasar. \n" + textoExtra;
             
             if (EconomyManager.instance != null)
             {
@@ -195,7 +221,7 @@ public class RevisionManager : MonoBehaviour
         }
         else
         {
-            textoResultados.text = "Error: si debia pasar.";
+            textoResultados.text = "Error: si debia pasar.\n" + textoExtra;
 
             if (EconomyManager.instance != null)
             {
@@ -225,11 +251,15 @@ public class RevisionManager : MonoBehaviour
 
     private bool DebePasar()
     {
+        textoExtra = "";
         Alumno alumnoReal = personaActual.alumnoReal;
 
         if (personaActual.esColado) return false;
 
-        if (alumnoReal.fotoID != carnetActual.fotoID) return false;
+        if (!RostrosCoinciden(alumnoReal.rasgosFaciales, carnetActual.rasgosFaciales)) {
+            textoExtra = "Identificacion error";
+            return false;
+        }
 
         if (!personaActual.vieneDeColaLibre)
         {
@@ -239,7 +269,9 @@ public class RevisionManager : MonoBehaviour
 
         if (carnetActual.area != areaGlobal) return false;
 
-        if (!CarnetVigente(carnetActual)) return false;
+        if (!CarnetVigente(carnetActual)) {
+            textoExtra = "Carnet vencido error";
+            return false;}
 
         return true;
     }
@@ -255,33 +287,6 @@ public class RevisionManager : MonoBehaviour
         return fechaVencimiento >= fechaActual;
     }
 
-    private void MostrarFotoDelCarnet(int fotoID)
-    {
-        if (fotoDatabase == null)
-        {
-            Debug.LogWarning("No hay FotoDatabase asignado en RevisionManager.");
-            return;
-        }
-
-        if (fotoCarnetImage == null)
-        {
-            Debug.LogWarning("No hay Image asignada para mostrar la foto.");
-            return;
-        }
-
-        FotoData foto = fotoDatabase.ObtenerFotoPorID(fotoID);
-
-        if (foto == null)
-        {
-            Debug.LogWarning("No se encontro foto con ID: " + fotoID);
-            fotoCarnetImage.sprite = null;
-            return;
-        }
-
-        fotoCarnetImage.sprite = foto.sprite;
-        fotoCarnetImage.enabled = true;
-    }
-
     private void SiguientePersona()
     {
         Debug.Log("Siguiente persona...");
@@ -290,6 +295,16 @@ public class RevisionManager : MonoBehaviour
         hayPersonaEnRevision = false;
         textoCola.text = "";
 
+        if (queueCharacterManager != null)
+        {
+            queueCharacterManager.RetirarPersonaActual();
+        }
+
+        if (QueueSystem.instance != null)
+        {
+            QueueSystem.instance.MandarSiguientePersona();
+        }
+        
         if (carnetVisual != null)
         {
             carnetVisual.ResetearCarnet();
@@ -316,17 +331,86 @@ public class RevisionManager : MonoBehaviour
             carnetVisual.gameObject.SetActive(false);
         }
 
-        if (fotoCarnetImage != null)
-        {
-            fotoCarnetImage.sprite = null;
-            fotoCarnetImage.enabled = false;
-        }
-
         if (textoResultados != null)
         {
             textoResultados.text = "Turno finalizado.";
         }
         
         StopAllCoroutines();
+    }
+
+    private void MostrarFotoCarnet(CarnetData carnet)
+    {
+        if (carnet == null || carnet.rasgosFaciales == null)
+        {
+            return;
+        }
+
+        RasgosFaciales rasgos = carnet.rasgosFaciales;
+
+        if (rasgos.esHombre)
+        {
+            AsignarSprite(cabezaFotoImage, cabezaHombre);
+            AsignarSprite(narizFotoImage, narizHombre);
+
+            AsignarSpritePorID(ojosFotoImage, ojosHombre, rasgos.ojosID);
+
+            AsignarSpritePorID(cejasFotoImage, cejasHombre, rasgos.cejasID);
+
+            AsignarSpritePorID(bocaFotoImage, bocasHombre, rasgos.bocaID);
+
+            AsignarSpritePorID(cabelloFotoImage, cabellosHombre, rasgos.cabelloID);
+        }
+
+        else
+        {
+            AsignarSprite(cabezaFotoImage, cabezaMujer);
+            AsignarSprite(narizFotoImage, narizMujer);
+
+            AsignarSpritePorID(ojosFotoImage, ojosMujer, rasgos.ojosID);
+
+            AsignarSpritePorID(cejasFotoImage, cejasMujer, rasgos.cejasID);
+
+            AsignarSpritePorID(bocaFotoImage, bocasMujer, rasgos.bocaID);
+
+            AsignarSpritePorID(cabelloFotoImage, cabellosMujer, rasgos.cabelloID);
+        }
+
+    }
+
+    private void AsignarSpritePorID(Image imagen, Sprite[] opciones, int id)
+    {
+        if (opciones == null || id < 0 || id >= opciones.Length)
+        {
+            AsignarSprite(imagen, null);
+            return;
+        }
+
+        AsignarSprite(imagen, opciones[id]);
+    }
+
+    private void AsignarSprite(Image imagen, Sprite sprite)
+    {
+        if (imagen == null)
+        {
+            return;
+        }
+
+        imagen.sprite = sprite;
+        imagen.enabled = sprite != null;
+    }
+
+    private bool RostrosCoinciden(RasgosFaciales reales, RasgosFaciales carnet)
+    {
+        if (reales == null || carnet == null)
+        {
+            return false;
+        }
+
+        return reales.esHombre == carnet.esHombre &&
+            reales.ojosID == carnet.ojosID &&
+            reales.cejasID == carnet.cejasID &&
+            reales.bocaID == carnet.bocaID &&
+            reales.cabelloID == carnet.cabelloID;
     }
 }

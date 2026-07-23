@@ -5,9 +5,6 @@ public class CarnetGenerator : MonoBehaviour
     [Header("Generadores")]
     public AlumnoGenerator alumnoGenerator;
 
-    [Header("Fotos")]
-    public FotoDatabase fotoDatabase;
-
     [Header("Probabilidades de error")]
     [Range(0f, 1f)] public float probErrorIdentificacion = 0.05f;
     [Range(0f, 1f)] public float probErrorArea = 0.08f;
@@ -37,12 +34,13 @@ public class CarnetGenerator : MonoBehaviour
 
         carnet.area = 1;
 
-        carnet.fotoID = alumno.fotoID;
-
         carnet.facultad = alumno.facultad;
         carnet.carrera = alumno.carrera;
 
         carnet.turno = UnityEngine.Random.Range(1, ObtenerTurnoCorrecto() + 1);
+
+        carnet.rasgosFaciales = alumno.rasgosFaciales.Copiar();
+
 
         // Fecha normal válida.
         carnet.diaVencimiento = 31;
@@ -81,13 +79,11 @@ public class CarnetGenerator : MonoBehaviour
     {
         Genero generoReal = alumnoReal.nombreCompleto.genero;
 
-        if (alumnoGenerator == null)
+        RasgosFaciales reales = alumnoReal.rasgosFaciales;
+
+        if (reales == null)
         {
-            Debug.LogWarning("No hay AlumnoGenerator asignado. Se aplicara error basico de identificacion.");
-
-            carnet.codigo = GenerarCodigoAlternativo(alumnoReal.codigo);
-            carnet.fotoID = GenerarFotoDistinta(alumnoReal);
-
+            Debug.LogWarning("El alumno no tiene rasgos faciales.");
             return;
         }
         
@@ -95,7 +91,15 @@ public class CarnetGenerator : MonoBehaviour
 
         carnet.nombreCompleto = alumnoFalso.nombreCompleto;
         carnet.codigo = GenerarCodigoAlternativo(alumnoReal.codigo);
-        carnet.fotoID = GenerarFotoDistinta(alumnoReal);
+
+        RasgosFaciales falsos;
+
+        do {
+            falsos = alumnoGenerator.GenerarRasgosFaciales(reales.esHombre);
+        }
+        while (RostrosCoinciden(reales, falsos));
+
+        carnet.rasgosFaciales = falsos;
 
         carnet.facultad = alumnoFalso.facultad;
         carnet.carrera = alumnoFalso.carrera;
@@ -159,15 +163,17 @@ public class CarnetGenerator : MonoBehaviour
         return codigo.ToString();
     }
 
-    private int GenerarFotoDistinta(Alumno alumnoReal)
+    private bool RostrosCoinciden(RasgosFaciales rostro1, RasgosFaciales rostro2)
     {
-        FotoData fotoDistinta = fotoDatabase.ObtenerFotoDistinta(alumnoReal.fotoID, alumnoReal.nombreCompleto.genero);
-        if (fotoDistinta!= null)
+        if (rostro1 == null || rostro2 == null)
         {
-            return fotoDistinta.id;
-        } else {
-            return -1;
+            return false;
         }
-    } 
+
+        return rostro1.ojosID == rostro2.ojosID &&
+            rostro1.cejasID == rostro2.cejasID &&
+            rostro1.bocaID == rostro2.bocaID &&
+            rostro1.cabelloID == rostro2.cabelloID;
+    }
 
 }

@@ -8,7 +8,6 @@ public class CarnetData
 
     public int turno;
     public int area;
-    public int fotoID;
 
     public string facultad;
     public string carrera;
@@ -16,6 +15,8 @@ public class CarnetData
     public int diaVencimiento;
     public int mesVencimiento;
     public int anioVencimiento;
+
+    public RasgosFaciales rasgosFaciales;
 
     public string NombreTexto()
     {

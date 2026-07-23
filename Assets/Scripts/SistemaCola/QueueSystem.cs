@@ -29,6 +29,9 @@ public class QueueSystem : MonoBehaviour
     [Header("Revision")]
     public RevisionManager revisionManager;
 
+    [Header("Personaje visual")]
+    public QueueCharacterManager queueCharacterManager;
+
     [Header("Configuracion")]
     public bool atencionActiva = false; //se activa a las 12
 
@@ -144,9 +147,9 @@ public class QueueSystem : MonoBehaviour
         PersonaEnCola siguientePersona = cola[0];
         cola.RemoveAt(0);
 
-        if (revisionManager != null)
+        if (queueCharacterManager != null)
         {
-            revisionManager.RecibirPersona(siguientePersona);
+            queueCharacterManager.PresentarPersona(siguientePersona);
         }
         else
         {
@@ -206,8 +209,10 @@ public class QueueSystem : MonoBehaviour
 
     private bool HayPersonaEnRevision()
     {
-        if (revisionManager == null) return false;
+        bool revisando = revisionManager != null && revisionManager.hayPersonaEnRevision;
 
-        return revisionManager.hayPersonaEnRevision;
+        bool entrando = queueCharacterManager != null && queueCharacterManager.HayPersonaEntrando;
+
+        return revisando || entrando;
     }
 }

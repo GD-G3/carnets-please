@@ -6,11 +6,28 @@ public class AlumnoGenerator : MonoBehaviour
     [Header("Generador de nombres")]
     public NombreGenerator nombreGenerator;
 
-    [Header("Fotos")]
-    public FotoDatabase fotoDatabase;
-
     [Header("Facultades y carreras")]
     public List<FacultadData> facultades;
+
+    [Header("Cantidad de opciones faciales")]
+    public int cantidadOjosHombre = 3;
+    public int cantidadCejasHombre = 3;
+    public int cantidadBocasHombre = 3;
+    public int cantidadCabellosHombre = 3;
+
+    public int cantidadOjosMujer = 3;
+    public int cantidadCejasMujer = 3;
+    public int cantidadBocasMujer = 3;
+    public int cantidadCabellosMujer = 3;
+
+    [Header("Cantidad de opciones ropa")]
+    public int cantidadPantalonesHombre = 3;
+    public int cantidadPolosHombre = 3;
+    public int cantidadZapatosHombre = 3;
+
+    public int cantidadPantalonesMujer = 3;
+    public int cantidadPolosMujer = 3;
+    public int cantidadZapatosMujer = 3;
 
     public Alumno GenerarAlumno()
     {
@@ -25,15 +42,22 @@ public class AlumnoGenerator : MonoBehaviour
         alumno.nombreCompleto = nombreGenerator.GenerarNombreCompleto(genero);
         alumno.codigo = GenerarCodigo();
 
-        FotoData fotoElegida = fotoDatabase.ObtenerFotoAleatoria(genero);
-        if (fotoElegida != null)
+        bool esHombre = alumno.nombreCompleto.genero == Genero.Hombre;
+        alumno.rasgosFaciales = GenerarRasgosFaciales(esHombre);
+
+        if (esHombre)
         {
-            alumno.fotoID = fotoElegida.id;
+            alumno.pantalonID = UnityEngine.Random.Range(0, cantidadPantalonesHombre);
+            alumno.poloID = UnityEngine.Random.Range(0, cantidadPolosHombre);
+            alumno.zapatosID = UnityEngine.Random.Range(0, cantidadZapatosHombre);
         }
         else
         {
-            alumno.fotoID = -1;
+            alumno.pantalonID = UnityEngine.Random.Range(0, cantidadPantalonesMujer);
+            alumno.poloID = UnityEngine.Random.Range(0, cantidadPolosMujer);
+            alumno.zapatosID = UnityEngine.Random.Range(0, cantidadZapatosMujer);
         }
+
 
         AsignarFacultadYCarrera(alumno);
 
@@ -81,5 +105,31 @@ public class AlumnoGenerator : MonoBehaviour
     {
         int codigo = UnityEngine.Random.Range(20200000, 20270000);
         return codigo.ToString();
+    }
+
+    public RasgosFaciales GenerarRasgosFaciales(bool esHombre)
+    {
+        RasgosFaciales rasgos = new RasgosFaciales();
+        rasgos.esHombre = esHombre;
+
+        rasgos.cabezaID = 0;
+        rasgos.narizID = 0;
+
+        if (esHombre)
+        {
+            rasgos.ojosID = UnityEngine.Random.Range(0, cantidadOjosHombre);
+            rasgos.cejasID = UnityEngine.Random.Range(0, cantidadCejasHombre);
+            rasgos.bocaID = UnityEngine.Random.Range(0, cantidadBocasHombre);
+            rasgos.cabelloID = UnityEngine.Random.Range(0, cantidadCabellosHombre);
+        }
+        else
+        {
+            rasgos.ojosID = UnityEngine.Random.Range(0, cantidadOjosMujer);
+            rasgos.cejasID = UnityEngine.Random.Range(0, cantidadCejasMujer);
+            rasgos.bocaID = UnityEngine.Random.Range(0, cantidadBocasMujer);
+            rasgos.cabelloID = UnityEngine.Random.Range(0, cantidadCabellosMujer);
+        }
+
+        return rasgos;
     }
 }
