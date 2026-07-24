@@ -7,13 +7,11 @@ public class PanelManager : MonoBehaviour
 
     public void OpenCameraPanel()
     {
-        deskPanel.SetActive(false);
         cameraPanel.SetActive(true);
     }
 
     public void CloseCameraPanel()
     {
         cameraPanel.SetActive(false);
-        deskPanel.SetActive(true);
     }
 }
