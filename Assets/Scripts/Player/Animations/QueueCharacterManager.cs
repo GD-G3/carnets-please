@@ -88,7 +88,7 @@ public class QueueCharacterManager : MonoBehaviour
         movimiento.ColocarEn(puntoEntrada);
 
         movimiento.MoverHacia(
-            puntoRevision,
+            puntoRevision, false, 
             () =>
             {
                 personajeActual = personajeNuevo;
@@ -102,22 +102,18 @@ public class QueueCharacterManager : MonoBehaviour
         );
     }
 
-    public void RetirarPersonaActual()
+    public void RetirarPersonaActual(bool fueAceptado)
     {
         if (personajeActual == null)
         {
             return;
         }
 
-        QueueCharacterUI personajeQueSale =
-            personajeActual;
+        QueueCharacterUI personajeQueSale = personajeActual;
 
         personajeActual = null;
 
-        QueueCharacterMovementUI movimiento =
-            personajeQueSale.GetComponent<
-                QueueCharacterMovementUI
-            >();
+        QueueCharacterMovementUI movimiento = personajeQueSale.GetComponent<QueueCharacterMovementUI>();
 
         if (movimiento == null)
         {
@@ -125,13 +121,13 @@ public class QueueCharacterManager : MonoBehaviour
             return;
         }
 
-        movimiento.MoverHacia(
-            puntoSalida,
-            () =>
-            {
-                personajeQueSale.gameObject.SetActive(false);
-            }
-        );
+        RectTransform destino = fueAceptado? puntoSalida: puntoEntrada;
+
+        movimiento.MoverHacia(destino, !fueAceptado, 
+        () =>
+        {
+            personajeQueSale.gameObject.SetActive(false);
+        });
     }
 
     private QueueCharacterUI ObtenerPersonajeDisponible()
@@ -150,4 +146,5 @@ public class QueueCharacterManager : MonoBehaviour
 
         return null;
     }
+
 }

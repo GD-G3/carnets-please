@@ -95,10 +95,6 @@ public class RevisionManager : MonoBehaviour
             fotoCarnetContainer.SetActive(false);
         }
 
-        if (textoResultados != null)
-        {
-            textoResultados.text = "Esperando inicio del turno...";
-        }
     }
 
     public void RecibirPersona(PersonaEnCola nuevaPersona)
@@ -126,7 +122,7 @@ public class RevisionManager : MonoBehaviour
         }
 
         carnetActual = datos;
-        textoResultados.text = $"{datos.NombreTexto()}\t{datos.codigo}\nTurno {datos.turno}\nFacultad: {datos.facultad}\nCarrera: {datos.carrera}\nVence: {datos.diaVencimiento:00}/{datos.mesVencimiento:00}/{datos.anioVencimiento}";
+        textoResultados.text = $"{datos.NombreTexto()}\t{datos.codigo}\nTurno {datos.turno}\nFacultad: {datos.facultad}\nArea: {datos.area}\nCarrera: {datos.carrera}\nVence: {datos.diaVencimiento:00}/{datos.mesVencimiento:00}/{datos.anioVencimiento}";
         
         if (personaActual != null && personaActual.vieneDeColaLibre) {
             textoCola.text = "COLA LIBRE";
@@ -162,11 +158,6 @@ public class RevisionManager : MonoBehaviour
 
             carnetVisual.gameObject.SetActive(true);
         }
-
-        if (textoResultados != null)
-        {
-            textoResultados.text = "Esperando escaneo del carnet...";
-        }
     }
 
    public void Permitir()
@@ -201,7 +192,7 @@ public class RevisionManager : MonoBehaviour
             }
         }
 
-        SiguientePersona();
+        SiguientePersona(true);
     }
 
     public void Rechazar()
@@ -229,20 +220,18 @@ public class RevisionManager : MonoBehaviour
             }
         }
 
-        SiguientePersona();
+        SiguientePersona(false);
     }
 
     private bool PuedeDecidir()
     {
         if (personaActual == null)
         {
-            textoResultados.text = "No hay persona actual.";
             return false;
         }
 
         if (carnetActual == null)
         {
-            textoResultados.text = "Primero debes escanear el carnet.";
             return false;
         }
 
@@ -263,12 +252,16 @@ public class RevisionManager : MonoBehaviour
 
         if (!personaActual.vieneDeColaLibre)
         {
-            if (carnetActual.turno > GameClock.TurnoGlobal)
+            if (carnetActual.turno > GameClock.TurnoGlobal){
+                textoExtra = "turno error";
                 return false;
+            }      
         }
 
-        if (carnetActual.area != areaGlobal) return false;
-
+        if (carnetActual.area != areaGlobal) {
+            textoExtra = "area error";
+            return false;
+        }
         if (!CarnetVigente(carnetActual)) {
             textoExtra = "Carnet vencido error";
             return false;}
@@ -287,7 +280,7 @@ public class RevisionManager : MonoBehaviour
         return fechaVencimiento >= fechaActual;
     }
 
-    private void SiguientePersona()
+    private void SiguientePersona(bool fueAceptado)
     {
         Debug.Log("Siguiente persona...");
         personaActual = null;
@@ -297,7 +290,7 @@ public class RevisionManager : MonoBehaviour
 
         if (queueCharacterManager != null)
         {
-            queueCharacterManager.RetirarPersonaActual();
+            queueCharacterManager.RetirarPersonaActual(fueAceptado);
         }
 
         if (QueueSystem.instance != null)

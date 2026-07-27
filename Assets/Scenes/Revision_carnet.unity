@@ -1611,8 +1611,8 @@ Transform:
   m_GameObject: {fileID: 453505236}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 101.100006, y: -14.07, z: 0}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 42.74}
+  m_LocalPosition: {x: -0.48890686, y: -14.870004, z: 0}
+  m_LocalScale: {x: 1.5000001, y: 1.5000001, z: 42.740005}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1352709841}
@@ -1621,7 +1621,7 @@ Transform:
   - {fileID: 2130869108}
   - {fileID: 644718641}
   - {fileID: 1066594004}
-  m_Father: {fileID: 1150409509}
+  m_Father: {fileID: 1405578690}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &458191692
 GameObject:
@@ -2366,7 +2366,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 14.550049, y: -145.42616}
+  m_AnchoredPosition: {x: 14.550049, y: -145.42618}
   m_SizeDelta: {x: -123.82, y: -290.85}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &632734457
@@ -4608,13 +4608,12 @@ RectTransform:
   m_Children:
   - {fileID: 1842390421}
   - {fileID: 1405578690}
-  - {fileID: 453505237}
   m_Father: {fileID: 150046092}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 188.9, y: -56.93}
-  m_SizeDelta: {x: 342.55, y: 161.76}
+  m_AnchoredPosition: {x: 188.90001, y: -48.831}
+  m_SizeDelta: {x: 342.55, y: 177.96}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1150409510
 MonoBehaviour:
@@ -5585,12 +5584,13 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 453505237}
   m_Father: {fileID: 1150409509}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 101.58893, y: 0.8}
+  m_AnchoredPosition: {x: 111, y: 0.8}
   m_SizeDelta: {x: 72.8221, y: 91.993}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1405578691
@@ -6619,7 +6619,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 13.0980835, w: -54.543472}
+  m_margin: {x: -26.522118, y: -8.523308, z: 13.0980835, w: -54.543472}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0

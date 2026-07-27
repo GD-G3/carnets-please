@@ -41,9 +41,7 @@ public class QueueCharacterMovementUI : MonoBehaviour
         rectTransform.anchoredPosition = punto.anchoredPosition;
     }
 
-    public void MoverHacia(
-        RectTransform puntoDestino,
-        Action alFinalizar = null)
+    public void MoverHacia(RectTransform puntoDestino, bool mirarIzquierda = false, Action alFinalizar = null)
     {
         if (puntoDestino == null)
         {
@@ -52,6 +50,7 @@ public class QueueCharacterMovementUI : MonoBehaviour
             );
             return;
         }
+        personajeVisual.MirarIzquierda(mirarIzquierda);
 
         if (movimientoActual != null)
         {

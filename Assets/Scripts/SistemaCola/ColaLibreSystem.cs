@@ -192,7 +192,7 @@ public class ColaLibreManager : MonoBehaviour
         persona.esColado = false;
         persona.fueDetectadoPorCamara = false;
         persona.vieneDeColaLibre = true;
-        persona.carnetMostrado.turno = Random.Range(1, 11);
+        persona.carnetMostrado.turno = Random.Range(6, 11);
 
         return persona;
     }

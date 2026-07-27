@@ -170,4 +170,18 @@ public class QueueCharacterUI : MonoBehaviour
         image.sprite = sprite;
         image.enabled = sprite != null;
     }
+
+    public void MirarIzquierda(bool izquierda)
+    {
+        float escala = Mathf.Abs(transform.localScale.x);
+
+        if (izquierda)
+        {
+            transform.localScale = new Vector3(-escala, transform.localScale.y, transform.localScale.z);
+        }
+        else
+        {
+            transform.localScale = new Vector3(escala, transform.localScale.y, transform.localScale.z);
+        }
+    }
 }

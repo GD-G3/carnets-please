@@ -20,7 +20,7 @@ public class EndingManager : MonoBehaviour
     [Header("Condiciones final bueno")]
     public float dineroMinimoFinalBueno = 500f;
     public int faltasMaximasFinalBueno = 5;
-    public int personasPermitidasMinimas = 10;
+    public int personasPermitidasMinimas = 50;
 
     [Header("Condiciones final malo")]
     public int faltasMinimasFinalMalo = 30;
