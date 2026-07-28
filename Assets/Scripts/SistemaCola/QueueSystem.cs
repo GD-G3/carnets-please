@@ -14,12 +14,12 @@ public class QueueSystem : MonoBehaviour
     public float probabilidadAntesDeAtencion = 0.9f;
 
     [Range(0f, 1f)]
-    public float probabilidadDuranteAtencion = 0.5f;
+    public float probabilidadDuranteAtencion = 0.75f;
 
     [Range(0f, 1f)]
     public float probabilidadGenerarEstudiante = 0.9f;
     
-    public float segundosEntreIntentos = 3f;
+    public float segundosEntreIntentos = 0.8f;
     private float timerGeneracion;
 
     [Header("Generadores")]
@@ -110,7 +110,7 @@ public class QueueSystem : MonoBehaviour
 
         probabilidadGenerarEstudiante = probabilidadDuranteAtencion;
 
-        Debug.Log("🔥 EmpezarAtencion ejecutado");
+        Debug.Log("Empezar Atencion");
         Debug.Log("Probabilidad durante atencion: " + probabilidadGenerarEstudiante);
 
         MandarSiguientePersona();

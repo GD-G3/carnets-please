@@ -18,7 +18,7 @@ public class GameClock : MonoBehaviour
     public int HoraFinal = 14;
     public int MinutoFinal = 30;
 
-    public float SegundosporTick = 3f;
+    public float SegundosporTick = 0.6f;
     
     public int minMinutesPerTick = 1;
     public int maxMinutesPerTick = 3;
@@ -33,6 +33,11 @@ public class GameClock : MonoBehaviour
 
     void Start()
     {
+        if (VisualIntensityManager.instance == null && FindAnyObjectByType<VisualIntensityManager>() == null)
+        {
+            gameObject.AddComponent<VisualIntensityManager>();
+        }
+
         HoraActual = HoraInicio;
         MinutoActual = MinutoInicio;
 

@@ -24,6 +24,12 @@ public class DayManager : MonoBehaviour
             instance = this;
             transform.SetParent(null);
             DontDestroyOnLoad(gameObject);
+
+            if (MusicManager.instance == null && FindAnyObjectByType<MusicManager>() == null)
+            {
+                GameObject musicObj = new GameObject("MusicManager");
+                musicObj.AddComponent<MusicManager>();
+            }
         }
         else
         {

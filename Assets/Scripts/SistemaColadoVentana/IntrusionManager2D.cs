@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -12,10 +12,10 @@ public class IntrusionManager2D : MonoBehaviour
     public float maxRampMultiplier = 4f;
 
     [Min(0.01f)]
-    public float maxRampTime = 120f;
+    public float maxRampTime = 60f;
 
     [Min(0.01f)]
-    public float tickInterval = 1f;
+    public float tickInterval = 0.35f;
 
     [Header("Scene References")]
     public Transform windowSpawnPoint;
