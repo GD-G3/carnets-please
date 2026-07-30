@@ -96,6 +96,10 @@ public class CameraThreatManager : MonoBehaviour
 
     private void Start()
     {
+        if (windowImage != null)
+        {
+            windowImage.gameObject.SetActive(false);
+        }
         if (windowToggleButton != null)
         {
             windowToggleButton.onClick.RemoveListener(ToggleWindow);
@@ -349,9 +353,9 @@ public class CameraThreatManager : MonoBehaviour
         isWindowClosed = false;
         closedWindowTimer = 0f;
 
-        if (windowImage != null && windowOpenSprite != null)
+        if (windowImage != null)
         {
-            windowImage.sprite = windowOpenSprite;
+            windowImage.gameObject.SetActive(false);
         }
 
         if (windowToggleButtonText != null)
@@ -372,9 +376,9 @@ public class CameraThreatManager : MonoBehaviour
         isWindowClosed = true;
         closedWindowTimer = 0f;
 
-        if (windowImage != null && windowClosedSprite != null)
+        if (windowImage != null )
         {
-            windowImage.sprite = windowClosedSprite;
+            windowImage.gameObject.SetActive(true);
         }
 
         if (windowToggleButtonText != null)

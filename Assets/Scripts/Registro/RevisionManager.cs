@@ -71,8 +71,6 @@ public class RevisionManager : MonoBehaviour
     public Sprite[] bocasMujer;
     public Sprite[] cabellosMujer;
 
-    private String textoExtra;
-
     private void Awake()
     {
         if(instance == null) instance = this;
@@ -171,14 +169,8 @@ public class RevisionManager : MonoBehaviour
             GameStatsManager.instance.RegistrarPermitir(debePasar, personaActual.esColado);
         }
 
-        if (debePasar)
-        {
-            textoResultados.text = "Correcto: debia pasar.";
-        }
-        else
-        {
-            textoResultados.text = "Error: no debia pasar. \n" + textoExtra;
-            
+        if (!debePasar)
+        {   
             if (EconomyManager.instance != null)
             {
                 if (personaActual.esColado)
@@ -206,14 +198,8 @@ public class RevisionManager : MonoBehaviour
             GameStatsManager.instance.RegistrarRechazar(!debePasar);
         }
 
-        if (!debePasar)
+        if (debePasar)
         {
-            textoResultados.text = "Correcto: debia ser rechazado.";
-        }
-        else
-        {
-            textoResultados.text = "Error: si debia pasar.\n" + textoExtra;
-
             if (EconomyManager.instance != null)
             {
                 EconomyManager.instance.RegistrarPenalizacion("Rechazo injustificado", EconomyManager.instance.multaRechazoInjustificado);
@@ -240,30 +226,25 @@ public class RevisionManager : MonoBehaviour
 
     private bool DebePasar()
     {
-        textoExtra = "";
         Alumno alumnoReal = personaActual.alumnoReal;
 
         if (personaActual.esColado) return false;
 
         if (!RostrosCoinciden(alumnoReal.rasgosFaciales, carnetActual.rasgosFaciales)) {
-            textoExtra = "Identificacion error";
             return false;
         }
 
         if (!personaActual.vieneDeColaLibre)
         {
             if (carnetActual.turno > GameClock.TurnoGlobal){
-                textoExtra = "turno error";
                 return false;
             }      
         }
 
         if (carnetActual.area != areaGlobal) {
-            textoExtra = "area error";
             return false;
         }
         if (!CarnetVigente(carnetActual)) {
-            textoExtra = "Carnet vencido error";
             return false;}
 
         return true;
@@ -322,11 +303,6 @@ public class RevisionManager : MonoBehaviour
         if (carnetVisual != null)
         {
             carnetVisual.gameObject.SetActive(false);
-        }
-
-        if (textoResultados != null)
-        {
-            textoResultados.text = "Turno finalizado.";
         }
         
         StopAllCoroutines();
