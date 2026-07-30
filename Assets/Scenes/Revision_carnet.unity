@@ -2166,7 +2166,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &533299648
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3498,11 +3498,11 @@ MonoBehaviour:
   - {fileID: 21300000, guid: e1d06e63b15b9304aa091aca8de346e9, type: 3}
   - {fileID: 21300000, guid: a4fc203b58bd478468e97e58f28eabb7, type: 3}
   - {fileID: 21300000, guid: c9170902f317adb40bf95ba1c74a8e42, type: 3}
-  PhaseInterval: 10
+  PhaseInterval: 25
   FinalPhaseWaitTime: 8
-  segundosEntreIntentosEvento: 1
+  segundosEntreIntentosEvento: 5
   probabilidadEventoPorDia:
-  - 1
+  - 0.05
   - 0.1
   - 0.2
   - 0.35
