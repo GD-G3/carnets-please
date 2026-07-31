@@ -3489,15 +3489,17 @@ MonoBehaviour:
   oxygenGameOverTime: 60
   studentCam1Image: {fileID: 1542132489}
   studentCam1PhaseSprites:
-  - {fileID: 21300000, guid: a8735a6819ad0e44f8feb254994a89c0, type: 3}
-  - {fileID: 21300000, guid: a6e9c99b993a8e34d8b0dd827ae05e8c, type: 3}
-  - {fileID: 21300000, guid: a9eba004e8118d24e95df56229881db5, type: 3}
+  - {fileID: 21300000, guid: 421b01754879b3f49a7d797662fb3a77, type: 3}
+  - {fileID: 21300000, guid: 53ef6cf80e2b01a458a527549429469b, type: 3}
+  - {fileID: 21300000, guid: 8131fe1a5f260a44193628fa2bd551f6, type: 3}
+  - {fileID: 21300000, guid: a76244988f51950478abccb13b4d71a8, type: 3}
   studentCam2Image: {fileID: 458191695}
   studentCam2Button: {fileID: 458191694}
   studentCam2PhaseSprites:
-  - {fileID: 21300000, guid: e1d06e63b15b9304aa091aca8de346e9, type: 3}
-  - {fileID: 21300000, guid: a4fc203b58bd478468e97e58f28eabb7, type: 3}
-  - {fileID: 21300000, guid: c9170902f317adb40bf95ba1c74a8e42, type: 3}
+  - {fileID: 21300000, guid: be1f90b7b95f2d54a8aa512fb8919706, type: 3}
+  - {fileID: 21300000, guid: d6d1fb4c9756d4c4c87db240a9b078c0, type: 3}
+  - {fileID: 21300000, guid: ecfb75644891bbc44ba08893c8ca8730, type: 3}
+  - {fileID: 21300000, guid: 3a7fe9d012e3f9c4fade7725358830d3, type: 3}
   PhaseInterval: 25
   FinalPhaseWaitTime: 8
   segundosEntreIntentosEvento: 5
